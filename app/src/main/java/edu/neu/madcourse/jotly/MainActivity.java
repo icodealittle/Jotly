@@ -1,5 +1,7 @@
 package edu.neu.madcourse.jotly;
-
+/*
+testing the branch
+ */
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
