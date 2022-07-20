@@ -35,7 +35,7 @@ public class Login extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Test Interface");
 
-        progressBar = findViewById(R.id.spinnerBar);
+        progressBar = findViewById(R.id.progressBar);
         email = findViewById(R.id.email_id);
         password = findViewById(R.id.password_id);
         login = findViewById(R.id.login_btn);
