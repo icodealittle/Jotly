@@ -11,9 +11,13 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnPausedListener;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -67,11 +71,11 @@ public class Firebase extends AppCompatActivity {
             //Change file to inputStream that will be uploaded to database
             InputStream inputStream = new FileInputStream(file);
             inputStream.close();
-
+            //Upload files with metadata
+            StorageMetadata metadata = new StorageMetadata();
             //Upload file inputStream
-            UploadTask uploadTask = journal.putStream(inputStream);
+            UploadTask uploadTask = journal.putStream(inputStream, metadata);
             uploadTask.addOnFailureListener( new OnFailureListener() {
-
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Log.d(TAG, "Could not upload journal entry");
@@ -81,14 +85,29 @@ public class Firebase extends AppCompatActivity {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Log.d(TAG, String.valueOf(taskSnapshot.getMetadata()));
                 }
-            })
+            });
 
+            //Monitor Upload Progress
+            uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    Log.d(TAG, "Upload is in progress");
+                }
+            }).addOnPausedListener(new OnPausedListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onPaused(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    Log.d(TAG, "The upload has been paused.");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    String uploadFailed = "The Upload Failed because " + e.toString();
+                    Log.d(TAG, uploadFailed);
+                }
+            });
 
         } catch (IOException e) {
             Log.d(TAG, e.toString());
         }
-
-
     }
-
 }
