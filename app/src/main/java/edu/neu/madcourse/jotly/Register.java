@@ -34,7 +34,7 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-        getSupportActionBar().setTitle("Connect to FireNotes");
+        getSupportActionBar().setTitle("Connect to Jotly");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         rUserName = findViewById(R.id.userName);
