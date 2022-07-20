@@ -1,5 +1,10 @@
 package edu.neu.madcourse.jotly;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,79 +14,104 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Login extends AppCompatActivity {
-    EditText email;
-    EditText password;
-    Button login;
-    TextView forgetPass;
-    TextView createAcc;
-    FirebaseAuth firebaseAuth;
-    FirebaseFirestore firebaseFirestore;
+    EditText lEmail, lPassword;
+    Button loginNow;
+    TextView forgetPass, createAcc;
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
     FirebaseUser user;
-    ProgressBar progressBar;
+    ProgressBar spinner;
+
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Test Interface");
+        getSupportActionBar().setTitle("Login to Jotly");
 
-        progressBar = findViewById(R.id.progressBar);
-        email = findViewById(R.id.email_id);
-        password = findViewById(R.id.password_id);
-        login = findViewById(R.id.login_btn);
-        forgetPass = findViewById(R.id.forgetPass_btn);
-        createAcc = findViewById(R.id.new_acct);
+        lEmail = findViewById(R.id.email);
+        lPassword = findViewById(R.id.lPassword);
+        loginNow = findViewById(R.id.loginBtn);
+
+        spinner = findViewById(R.id.progressBar3);
+
+        forgetPass = findViewById(R.id.forgotPasword);
+        createAcc = findViewById(R.id.createAccount);
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseFirestore = FirebaseFirestore.getInstance();
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String user_email = email.getText().toString();
-                String user_password = password.getText().toString();
-                if (user_email.isEmpty() || user_password.isEmpty()) {
-                    Toast.makeText(Login.this, "Fields are required", Toast.LENGTH_SHORT).show();
-                    return;
-                }
 
-                progressBar.setVisibility(View.VISIBLE);
+        showWarning();
 
-                if (firebaseAuth.getCurrentUser().isAnonymous()) {
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
+        loginNow.setOnClickListener(v -> {
+            String mEmail = lEmail.getText().toString();
+            String mPassword = lPassword.getText().toString();
 
-                    firebaseFirestore.collection("notes").document(user.getUid()).delete().addOnSuccessListener(unused -> Toast.makeText(Login.this, "All Temp journals are Deleted", Toast.LENGTH_SHORT).show());
+            if (mEmail.isEmpty() || mPassword.isEmpty()) {
+                Toast.makeText(Login.this, "Fields Are Required.", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-                    user.delete().addOnSuccessListener(aVoid -> Toast.makeText(Login.this, "All Temp users Deleted.", Toast.LENGTH_SHORT).show());
-                }
+            // delete notes first
 
-                firebaseAuth.signInWithEmailAndPassword(user_email, user_password).addOnSuccessListener(authResult -> {
-                    Toast.makeText(Login.this, "Success !", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    finish();
-                }).addOnFailureListener(new OnFailureListener() {
+            spinner.setVisibility(View.VISIBLE);
+
+            if (fAuth.getCurrentUser().isAnonymous()) {
+                FirebaseUser user = fAuth.getCurrentUser();
+
+                fStore.collection("notes").document(user.getUid()).delete().addOnSuccessListener(aVoid -> Toast.makeText(Login.this, "All Temp Notes are Deleted.", Toast.LENGTH_SHORT).show());
+
+                // delete Temp user
+
+                user.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Login.this, "Login Failed. " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(Login.this, "Temp user Deleted.", Toast.LENGTH_SHORT).show();
                     }
                 });
-
             }
+
+            fAuth.signInWithEmailAndPassword(mEmail, mPassword).addOnSuccessListener(authResult -> {
+                Toast.makeText(Login.this, "Success !", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(Login.this, "Login Failed. " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    spinner.setVisibility(View.GONE);
+                }
+            });
         });
 
-        createAcc.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), Register.class)));
+        createAcc.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Register.class)));
     }
 
+    private void showWarning() {
+        final AlertDialog.Builder warning = new AlertDialog.Builder(this)
+                .setTitle("Are you sure ?")
+                .setMessage("Linking Existing Account Will delete all the temp notes. Create New Account To Save them.")
+                .setPositiveButton("Save Notes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(getApplicationContext(), Register.class));
+                        finish();
+                    }
+                }).setNegativeButton("Its Ok", (dialog, which) -> {
+                    // do nothing
+                });
+
+        warning.show();
+    }
 }
