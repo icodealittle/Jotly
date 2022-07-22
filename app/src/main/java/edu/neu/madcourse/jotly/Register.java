@@ -1,9 +1,7 @@
 package edu.neu.madcourse.jotly;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,22 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
     //    EditText rUserName, rUserEmail, rUserPass, rUserConfPass;
-//    Button syncAccount;
-//    TextView loginAct;
-//    ProgressBar progressBar;
+    //    Button syncAccount;
+    //    TextView loginAct;
+    //    ProgressBar progressBar;
     private FirebaseAuth fAuth;
     private EditText fullName, email, password, confirmPassword;
     private ProgressBar progressBar;
@@ -103,7 +96,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         }
 
         //Validity password matches
-        if (!userPass.equals(userPass1)) {
+        if (!userPass1.equals(userPass)) {
             confirmPassword.setError("Password is not match. Please try again!");
             confirmPassword.requestFocus();
             return;
@@ -116,6 +109,30 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             return;
         }
 
+        progressBar.setVisibility(View.VISIBLE);
+        fAuth.createUserWithEmailAndPassword(userEmail, userPass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    User user = new User(userName, userEmail, userPass, userPass1);
+                    FirebaseDatabase.getInstance().getReference("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(Register.this, "User has successful registered", Toast.LENGTH_LONG).show();
+                                progressBar.setVisibility(View.GONE);
+                            } else {
+                                Toast.makeText(Register.this, "Fail to registered", Toast.LENGTH_LONG).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+                } else {
+                    Toast.makeText(Register.this, "Fail to registered", Toast.LENGTH_LONG).show();
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+        });
 
     }
 }
