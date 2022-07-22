@@ -20,10 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
-    //    EditText rUserName, rUserEmail, rUserPass, rUserConfPass;
-    //    Button syncAccount;
-    //    TextView loginAct;
-    //    ProgressBar progressBar;
     private FirebaseAuth fAuth;
     private EditText fullName, email, password, confirmPassword;
     private ProgressBar progressBar;
@@ -36,12 +32,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         setContentView(R.layout.register);
 
         fAuth = FirebaseAuth.getInstance();
-
-//        loginTV = (TextView) findViewById(R.id.login);
         registerUser = (Button) findViewById(R.id.createAccount);
-//        loginTV.setOnClickListener(this);
         registerUser.setOnClickListener(this);
-
         fullName = (EditText) findViewById(R.id.userName);
         email = (EditText) findViewById(R.id.userEmail);
         password = (EditText) findViewById(R.id.password);
@@ -104,113 +96,35 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
         //Validity password have to be at least 6 charaters per firebase requirment
         if ((userPass.length() < 6) || (userPass1.length() < 6)) {
-            password.setError("Minimum password have to be at least 6 characters or more. Please try again!");
+            password.setError("Minimum password have to be at least 6 characters or more. " +
+                    "Please try again!");
             password.requestFocus();
             return;
         }
 
         progressBar.setVisibility(View.VISIBLE);
-        fAuth.createUserWithEmailAndPassword(userEmail, userPass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    User user = new User(userName, userEmail, userPass, userPass1);
-                    FirebaseDatabase.getInstance().getReference("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(Register.this, "User has successful registered", Toast.LENGTH_LONG).show();
+        fAuth.createUserWithEmailAndPassword(userEmail, userPass).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                User user = new User(userName, userEmail, userPass, userPass1);
+                FirebaseDatabase.getInstance().getReference("User").child(FirebaseAuth
+                                .getInstance().getCurrentUser().getUid()).setValue(user)
+                        .addOnCompleteListener(task1 -> {
+                            if (task1.isSuccessful()) {
+                                Toast.makeText(Register.this,
+                                        "User has successful registered", Toast.LENGTH_LONG).show();
                                 progressBar.setVisibility(View.GONE);
                             } else {
-                                Toast.makeText(Register.this, "Fail to registered", Toast.LENGTH_LONG).show();
+                                Toast.makeText(Register.this, "Fail to registered",
+                                        Toast.LENGTH_LONG).show();
                                 progressBar.setVisibility(View.GONE);
                             }
-                        }
-                    });
-                } else {
-                    Toast.makeText(Register.this, "Fail to registered", Toast.LENGTH_LONG).show();
-                    progressBar.setVisibility(View.GONE);
-                }
+                        });
+            } else {
+                Toast.makeText(Register.this, "Fail to registered",
+                        Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
             }
         });
 
     }
 }
-
-//        getSupportActionBar().setTitle("Connect to Jotly");
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//
-//        rUserName = findViewById(R.id.userName);
-//        rUserEmail = findViewById(R.id.userEmail);
-//        rUserPass = findViewById(R.id.password);
-//        rUserConfPass = findViewById(R.id.passwordConfirm);
-//
-//        syncAccount = findViewById(R.id.createAccount);
-//        loginAct = findViewById(R.id.login);
-//        progressBar = findViewById(R.id.progressBar4);
-//
-//        fAuth = FirebaseAuth.getInstance();
-//
-//        loginAct.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Login.class)));
-//
-//        syncAccount.setOnClickListener(v -> {
-//            final String uUsername = rUserName.getText().toString();
-//            String uUserEmail = rUserEmail.getText().toString();
-//            String uUserPass = rUserPass.getText().toString();
-//            String uConfPass = rUserConfPass.getText().toString();
-//
-//            if (uUserEmail.isEmpty() || uUsername.isEmpty() || uUserPass.isEmpty() || uConfPass.isEmpty()) {
-//                Toast.makeText(Register.this, "All Fields Are Required.", Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-//
-//            if (!uUserPass.equals(uConfPass)) {
-//                rUserConfPass.setError("Password Do not Match.");
-//            }
-//
-//            progressBar.setVisibility(View.VISIBLE);
-//
-//            AuthCredential credential = EmailAuthProvider.getCredential(uUserEmail, uUserPass);
-//            fAuth.getCurrentUser().linkWithCredential(credential).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-//                @Override
-//                public void onSuccess(AuthResult authResult) {
-//                    Toast.makeText(Register.this, "Notes are Synced.", Toast.LENGTH_SHORT).show();
-//                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//
-//                    FirebaseUser usr = fAuth.getCurrentUser();
-//                    UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
-//                            .setDisplayName(uUsername)
-//                            .build();
-//                    usr.updateProfile(request);
-//
-//                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//                    finish();
-//
-//                }
-//            }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception e) {
-//                    Toast.makeText(Register.this, "Failed to Connect. Try Again.", Toast.LENGTH_SHORT).show();
-//                    progressBar.setVisibility(View.VISIBLE);
-//                }
-//            });
-//
-//        });
-
-//@Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        startActivity(new Intent(this, MainActivity.class));
-//        finish();
-//        return super.onOptionsItemSelected(item);
-//    }
-
-//    private void storeDatabase(String name, String email, String password){
-//        fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//            @Override
-//            public void onComplete(@NonNull Task<AuthResult> task) {
-//                if (task.isSuccessful()){
-//
-//                }
-//            }
-//        });
-//    }
