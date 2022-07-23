@@ -5,7 +5,7 @@ import android.media.Image;
 /**
  * This class presents a journal object
  */
-public class EntryClass {
+public class Entry {
     private String date;
     private String time;
     private String title;
@@ -15,7 +15,9 @@ public class EntryClass {
     private Image mood = null;
     private String updateTime;
 
-    public EntryClass(String date, String time, String title, String content){
+    public Entry() {}
+
+    public Entry(String date, String time, String title, String content){
         this.date = date;
         this.time = time;
         this.title = title;
@@ -23,7 +25,7 @@ public class EntryClass {
         this.updateTime = date + " " + time;
     }
 
-    public EntryClass(String date, String time, String title, String content, Image mood){
+    public Entry(String date, String time, String title, String content, Image mood){
         this.date = date;
         this.time = time;
         this.title = title;
