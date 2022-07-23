@@ -61,12 +61,12 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             fullName.requestFocus();
             return;
         }
-
-        if (userEmail.isEmpty()) {
-            email.setError("Field is required!");
-            email.requestFocus();
-            return;
-        }
+//
+//        if (userEmail.isEmpty()) {
+//            email.setError("Field is required!");
+//            email.requestFocus();
+//            return;
+//        }
 
         //Validity email address
         if (!Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
