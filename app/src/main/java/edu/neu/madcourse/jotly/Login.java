@@ -59,7 +59,8 @@ public class Login extends AppCompatActivity {
             String mPassword = lPassword.getText().toString();
 
             if (mEmail.isEmpty() || mPassword.isEmpty()) {
-                Toast.makeText(Login.this, "Fields Are Required.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this, "Fields Are Required.",
+                        Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -70,14 +71,17 @@ public class Login extends AppCompatActivity {
             if (fAuth.getCurrentUser().isAnonymous()) {
                 FirebaseUser user = fAuth.getCurrentUser();
 
-                fStore.collection("notes").document(user.getUid()).delete().addOnSuccessListener(aVoid -> Toast.makeText(Login.this, "All Temp Notes are Deleted.", Toast.LENGTH_SHORT).show());
+                fStore.collection("notes").document(user.getUid()).delete()
+                        .addOnSuccessListener(aVoid -> Toast.makeText(Login.this,
+                                "All Temp Notes are Deleted.", Toast.LENGTH_SHORT).show());
 
                 // delete Temp user
 
                 user.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(Login.this, "Temp user Deleted.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, "Temp user Deleted.",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -89,7 +93,8 @@ public class Login extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(Login.this, "Login Failed. " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, "Login Failed. " + e.getMessage(),
+                            Toast.LENGTH_SHORT).show();
                     spinner.setVisibility(View.GONE);
                 }
             });
@@ -101,7 +106,8 @@ public class Login extends AppCompatActivity {
     private void showWarning() {
         final AlertDialog.Builder warning = new AlertDialog.Builder(this)
                 .setTitle("Are you sure ?")
-                .setMessage("Linking Existing Account Will delete all the temp notes. Create New Account To Save them.")
+                .setMessage("Linking Existing Account Will delete all the temp notes. " +
+                        "Create New Account To Save them.")
                 .setPositiveButton("Save Notes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
