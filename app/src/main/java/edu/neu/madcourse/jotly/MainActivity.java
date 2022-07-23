@@ -1,8 +1,5 @@
 package edu.neu.madcourse.jotly;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -13,15 +10,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView createAcct;
-    private TextView resetPass;
+    //    private TextView resetPass;
     private Button userLogin;
     private EditText userEmail, userPassword;
     private FirebaseAuth firebaseAuth;
@@ -36,10 +32,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         createAcct.setOnClickListener(this);
         userLogin = (Button) findViewById(R.id.loginBtn);
         userLogin.setOnClickListener(this);
-        resetPass = (TextView) findViewById(R.id.forgotPasword);
-        resetPass.setOnClickListener(this);
+//        resetPass = (TextView) findViewById(R.id.forgotPasword);
+//        resetPass.setOnClickListener(this);
 
-        userEmail = (EditText) findViewById(R.id.userEmail);
+        userEmail = (EditText) findViewById(R.id.login_userEmail);
         userPassword = (EditText) findViewById(R.id.userPassword);
         progressBar = (ProgressBar) findViewById(R.id.progressBar2);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -73,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
-        if (Patterns.EMAIL_ADDRESS.matcher(uEmail).matches()) {
+        if (!Patterns.EMAIL_ADDRESS.matcher(uEmail).matches()) {
             userEmail.setError("Enter a valid email");
             userEmail.requestFocus();
             return;
@@ -93,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         progressBar.setVisibility(View.VISIBLE);
-        firebaseAuth.createUserWithEmailAndPassword(uEmail, uPassword).addOnCompleteListener(task -> {
+        firebaseAuth.signInWithEmailAndPassword(uEmail, uPassword).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 //Redirect to journal dashboard
                 startActivity(new Intent(MainActivity.this, JournalDashboard.class));
