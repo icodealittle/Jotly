@@ -1,4 +1,4 @@
-package edu.neu.madcourse.jotly;
+package edu.neu.madcourse.jotly.addingJournal;
 
 public class Journal {
     private String name;

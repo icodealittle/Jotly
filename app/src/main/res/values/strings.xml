@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Jotly</string>
+    <string name="create">Create</string>
+    <string name="cancel">Cancel</string>
 </resources>
