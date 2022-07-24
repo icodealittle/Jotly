@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView createAcct;
-    //    private TextView resetPass;
+    private TextView resetPass;
     private Button userLogin;
     private EditText userEmail, userPassword;
     private FirebaseAuth firebaseAuth;
@@ -28,16 +28,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        createAcct = (TextView) findViewById(R.id.createAccount);
+        createAcct = findViewById(R.id.createAccount);
         createAcct.setOnClickListener(this);
-        userLogin = (Button) findViewById(R.id.loginBtn);
+        userLogin = findViewById(R.id.loginBtn);
         userLogin.setOnClickListener(this);
-//        resetPass = (TextView) findViewById(R.id.forgotPasword);
-//        resetPass.setOnClickListener(this);
+        resetPass = findViewById(R.id.forgotPasword);
+        resetPass.setOnClickListener(this);
 
-        userEmail = (EditText) findViewById(R.id.login_userEmail);
-        userPassword = (EditText) findViewById(R.id.userPassword);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar2);
+        userEmail = findViewById(R.id.login_userEmail);
+        userPassword = findViewById(R.id.userPassword);
+        progressBar = findViewById(R.id.progressBar2);
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
