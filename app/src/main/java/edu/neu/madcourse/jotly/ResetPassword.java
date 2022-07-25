@@ -32,19 +32,20 @@ public class ResetPassword extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        resetPasswordbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resetPassword();
-            }
-        });
+        resetPasswordbtn.setOnClickListener(view -> resetPassword());
     }
 
     private void resetPassword() {
         String reset_email = resetUserEmail.getText().toString().trim();
 
-        if ((reset_email.isEmpty()) || (!Patterns.EMAIL_ADDRESS.matcher(reset_email).matches())) {
-            resetUserEmail.setError("Required field. Invalid Email");
+        if ((reset_email.isEmpty())) {
+            resetUserEmail.setError("Required field.");
+            resetUserEmail.requestFocus();
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(reset_email).matches()) {
+            resetUserEmail.setError("Email have a be a valid email.");
             resetUserEmail.requestFocus();
             return;
         }
@@ -53,9 +54,13 @@ public class ResetPassword extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(ResetPassword.this, "Please check your indox/spam mail to reset your email.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ResetPassword.this, "Check your indox for " +
+                            "reset password instruction", Toast.LENGTH_LONG).show();
+                    progressBar.setVisibility(View.GONE);
                 } else {
-                    Toast.makeText(ResetPassword.this, "Your email is not in our system. Please try again", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ResetPassword.this, "Invalid Email. " +
+                            "Please try again!", Toast.LENGTH_LONG).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
