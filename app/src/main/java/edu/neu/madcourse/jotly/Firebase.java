@@ -5,109 +5,105 @@
 * */
 package edu.neu.madcourse.jotly;
 
-import android.os.Bundle;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import com.google.android.gms.tasks.OnCanceledListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnPausedListener;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageMetadata;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-
-public class Firebase extends AppCompatActivity {
-    //Initialize Global Storage Instance
-    private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-    private StorageReference storageReference = firebaseStorage.getReference();
-    private StorageReference journal;
-    private StorageReference entry;
-    //Setting newEntry variable
-    String newJournalEntry;
+public class Firebase {
+    protected DatabaseReference jotlyDatabase;
+    private User user;
+    private Journal journal;
     //Tag for logging
     private final String TAG = "Firebase";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.firebase);
-
-        createReference();
-
+    // initialize database
+    public void initializeDatabaseReference(FirebaseDatabase firebaseDatabase) {
+        jotlyDatabase = firebaseDatabase.getReference();
     }
 
-    private void createReference() {
-        //Initialize child Reference for Journal
-        journal = storageReference.child("journal");
+    private void addJournalEventListener(DatabaseReference databaseReference) {
+        ValueEventListener addJournalListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Journal journal = snapshot.getValue(Journal.class);
+            }
 
-        //Initialize child Reference for Journal Entry
-        String journalEntry = "journal/" + newJournalEntry;
-        entry = storageReference.child(journalEntry);
-        //Reference Data
-        //File path
-        String path = entry.getPath();
-        //File name
-        String name = entry.getName();
-        //Navigate to "journal" from "entry"
-        //journal = entry.getParent();
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "Failed to add Journal", error.toException());
+            }
+        };
+        databaseReference.addValueEventListener(addJournalListener);
     }
 
-    public void uploadEntry(String newEntry) {
-        newJournalEntry = newEntry;
-        File file = new File(entry.getPath());
+    //create new journal
+    //private void createJournal(){}
+
+    // add journal - update journals
+    public void addJournal(Journal journal) {
+        String key = jotlyDatabase.child("journals").push().getKey();
+        List<Journal> journals = user.getJournals();
+        journals.add(journal);
+
+        Map<String, Object> journalsUpdates = new HashMap<>();
+        journalsUpdates.put("/journals" + key, journals);
+        journalsUpdates.put("/user" + user.getUsername() + "/" + key, journal);
+
+        jotlyDatabase.updateChildren(journalsUpdates);
+    }
+
+    private void addEntryEventListener(DatabaseReference databaseReference) {
+        ValueEventListener addEntryListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Entry entry = snapshot.getValue(Entry.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "Failed to add Entry", error.toException());
+            }
+        };
+        databaseReference.addValueEventListener(addEntryListener);
+    }
+
+    //create new entry
+    public void createEntry(String title, String content, Date created) {
+        Entry entry = new Entry(title, content, created);
+        addEntry(entry.toMap());
+        List<Entry> entries = journal.getEntries();
+        entries.add(entry);
+    }
+
+    //update entry
+
+    // add entry - update journal
+    public void addEntry(Map<String, Object> entry) {
+        String key = jotlyDatabase.child("entry").push().getKey();
+        Map<String, Object> journalsUpdates = new HashMap<>();
+        journalsUpdates.put("/entry" + key, entry);
+        journalsUpdates.put("/user" + user.getUsername() + "/journal/" + key, entry);
 
         try {
-            //Change file to inputStream that will be uploaded to database
-            InputStream inputStream = new FileInputStream(file);
-            inputStream.close();
-            //Upload files with metadata
-            StorageMetadata metadata = new StorageMetadata();
-            //Upload file inputStream
-            UploadTask uploadTask = journal.putStream(inputStream, metadata);
-            uploadTask.addOnFailureListener( new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.d(TAG, "Could not upload journal entry");
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Log.d(TAG, String.valueOf(taskSnapshot.getMetadata()));
-                }
-            });
-
-            //Monitor Upload Progress
-            uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                    Log.d(TAG, "Upload is in progress");
-                }
-            }).addOnPausedListener(new OnPausedListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onPaused(@NonNull UploadTask.TaskSnapshot snapshot) {
-                    Log.d(TAG, "The upload has been paused.");
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    String uploadFailed = "The Upload Failed because " + e.toString();
-                    Log.d(TAG, uploadFailed);
-                }
-            });
-
-        } catch (IOException e) {
-            Log.d(TAG, e.toString());
+            jotlyDatabase.updateChildren(journalsUpdates);
+        } catch (DatabaseException e) {
+            Log.d(TAG, "Failed to add new journal with error: " + e);
         }
     }
+
+
 }
+
