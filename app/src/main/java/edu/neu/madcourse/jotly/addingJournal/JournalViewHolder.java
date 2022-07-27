@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import edu.neu.madcourse.jotly.R;
 
+/**
+ * This class is used to set up view for each journal instance
+ */
 public class JournalViewHolder extends RecyclerView.ViewHolder {
     public TextView nameTV;
 

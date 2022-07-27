@@ -13,6 +13,10 @@ import androidx.fragment.app.DialogFragment;
 
 import edu.neu.madcourse.jotly.R;
 
+/**
+ * This class presents a dialog when the floating action button is clicked
+ * This dialog will be used to create a new journal instance
+ */
 public class FABDialog extends DialogFragment {
     NoticeDialogListener listener;
     private EditText inputName;
