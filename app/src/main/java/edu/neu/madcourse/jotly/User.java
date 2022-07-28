@@ -1,19 +1,30 @@
 package edu.neu.madcourse.jotly;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    private String email;
-    private String name;
-    private String username;
-    private String password;
-    private List<Journal> Journals;
+    private int userID;
+    public String userName, email, password, confirmPass;
+    private List<Journal> journals;
 
-    public String getUsername() {
-        return username;
+    public User() {
     }
+    public User(int userID, String userName, String email, String password, String confirmPass) {
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.confirmPass = confirmPass;
+        this.journals = new ArrayList<>();
+        this.userID = userID;
+    }
+
+    public int getUserId() {
+        return userID;
+    }
+
     public List<Journal> getJournals() {
-        return Journals;
+        return journals;
     }
 
 }
