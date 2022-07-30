@@ -1,4 +1,4 @@
-package edu.neu.madcourse.jotly;
+package edu.neu.madcourse.jotly.journalIndex;
 
 import android.media.Image;
 
@@ -9,13 +9,20 @@ public class Entry {
     private String date;
     private String time;
     private String title;
-    private String content;
+    private String content = null;
     private String location = null;
     private String weather = null;
     private Image mood = null;
     private String updateTime;
 
     public Entry() {}
+
+    public Entry(String date, String time, String title){
+        this.date = date;
+        this.time = time;
+        this.title = title;
+        this.updateTime = date + " " + time;
+    }
 
     public Entry(String date, String time, String title, String content){
         this.date = date;

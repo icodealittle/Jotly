@@ -1,4 +1,4 @@
-package edu.neu.madcourse.jotly.addingJournal;
+package edu.neu.madcourse.jotly.journalIndex;
 
 import android.view.View;
 import android.widget.TextView;
@@ -7,20 +7,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import edu.neu.madcourse.jotly.R;
+import edu.neu.madcourse.jotly.addingJournal.Journal;
 
-/**
- * This class is used to set up view for each journal instance
- */
-public class JournalViewHolder extends RecyclerView.ViewHolder {
+public class EntryViewHolder extends RecyclerView.ViewHolder{
     public TextView nameTV;
 
-    public JournalViewHolder(@NonNull View itemView) {
+    public EntryViewHolder(@NonNull View itemView) {
         super(itemView);
         this.nameTV = itemView.findViewById(R.id.entryNameItem);
     }
 
-    public void bindThisData(Journal theJournalToBind) {
+    public void bindThisData(Entry theEntryToBind) {
         // sets the name of the person to the name textview of the viewholder.
-        nameTV.setText(theJournalToBind.getName());
+        nameTV.setText(theEntryToBind.getTitle());
     }
 }

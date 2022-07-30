@@ -12,7 +12,7 @@
         android:contentDescription="@string/app_name"
         android:onClick="showDialog"
         android:scaleType="center"
-        android:text="Please Enter The Journal Name"
+        android:text="Please Enter The Entry Name"
         android:textColor="#FFFFFFFF"
         android:textSize="30dp" />
 
@@ -24,7 +24,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
-        android:hint="Journal name"
+        android:hint="Entry name"
         android:inputType="text"
         android:minHeight="48dp"
         android:textColorHint="#757575" />

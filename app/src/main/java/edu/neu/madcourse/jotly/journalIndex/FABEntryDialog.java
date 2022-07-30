@@ -1,4 +1,4 @@
-package edu.neu.madcourse.jotly.addingJournal;
+package edu.neu.madcourse.jotly.journalIndex;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -13,12 +13,8 @@ import androidx.fragment.app.DialogFragment;
 
 import edu.neu.madcourse.jotly.R;
 
-/**
- * This class presents a dialog when the floating action button is clicked
- * This dialog will be used to create a new journal instance
- */
-public class FABDialog extends DialogFragment {
-    NoticeDialogListener listener;
+public class FABEntryDialog extends DialogFragment {
+    FABEntryDialog.NoticeDialogListener listener;
     private EditText inputName;
     View dialogView;
 
@@ -28,7 +24,7 @@ public class FABDialog extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
 
 
-        builder.setView(inflater.inflate(R.layout.add_journal_fab, null))
+        builder.setView(inflater.inflate(R.layout.add_entry_fab, null))
                 .setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
@@ -36,12 +32,12 @@ public class FABDialog extends DialogFragment {
                         inputName = ((AlertDialog)dialog).findViewById(R.id.entryName);
                         String name = inputName.getText().toString();
 
-                        listener.onDialogPositiveClick(FABDialog.this, name);
+                        listener.onDialogPositiveClick(FABEntryDialog.this, name);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        FABDialog.this.getDialog().cancel();
+                        FABEntryDialog.this.getDialog().cancel();
                     }
                 });
         return builder.create();
@@ -54,7 +50,7 @@ public class FABDialog extends DialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            listener = (NoticeDialogListener) context;
+            listener = (FABEntryDialog.NoticeDialogListener) context;
         } catch (ClassCastException e) { // Catch error if the context cannot implement
             throw new ClassCastException("Cannot implement NoticeDialogListener");
         }

@@ -3,7 +3,7 @@ package edu.neu.madcourse.jotly.addingJournal;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.neu.madcourse.jotly.Entry;
+import edu.neu.madcourse.jotly.journalIndex.Entry;
 
 public class Journal {
     private String name;
