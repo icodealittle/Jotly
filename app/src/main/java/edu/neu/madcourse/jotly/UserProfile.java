@@ -1,122 +1,79 @@
 package edu.neu.madcourse.jotly;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class UserProfile extends AppCompatActivity {
-    EditText lEmail, lPassword;
-    Button loginNow;
-    TextView forgetPass, createAcc;
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
-    FirebaseUser user;
-    ProgressBar spinner;
+    private Button logout;
+    private FirebaseUser user;
+    private DatabaseReference databaseReference;
+    private String userID;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.user_profile);
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.login);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setTitle("Login to Jotly");
+        logout = (Button) findViewById(R.id.signout);
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(UserProfile.this, MainActivity.class));
+            }
+        });
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        userID = user.getUid();
+
+        final TextView nameDisplay = (TextView) findViewById(R.id.fullname_display);
+        final TextView emailDisplay = (TextView) findViewById(R.id.email_display);
+//        final TextView usernameDisplay = (TextView) findViewById(R.id.userName_display);
+
+        databaseReference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User userProfile = snapshot.getValue(User.class);
+
+                if (userProfile != null) {
+                    String fullname = userProfile.userName;
+                    String email = userProfile.email;
+
+                    nameDisplay.setText(fullname);
+                    emailDisplay.setText(email);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(UserProfile.this, "Something went wrong. Please try again!", Toast.LENGTH_LONG).show();
+            }
+        });
+//        firebaseAuth = FirebaseAuth.getInstance();
 //
-//        lEmail = findViewById(R.id.email);
-//        lPassword = findViewById(R.id.lPassword);
-//        loginNow = findViewById(R.id.loginBtn);
-//
-//        spinner = findViewById(R.id.progressBar3);
-//
-//        forgetPass = findViewById(R.id.forgotPasword);
-//        createAcc = findViewById(R.id.createAccount);
-//        user = FirebaseAuth.getInstance().getCurrentUser();
-//
-//        fAuth = FirebaseAuth.getInstance();
-//        fStore = FirebaseFirestore.getInstance();
-//
-//
-//        showWarning();
-//
-//        loginNow.setOnClickListener(v -> {
-//            String mEmail = lEmail.getText().toString();
-//            String mPassword = lPassword.getText().toString();
-//
-//            if (mEmail.isEmpty() || mPassword.isEmpty()) {
-//                Toast.makeText(UserProfile.this, "Fields Are Required.",
-//                        Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-//
-//            // delete notes first
-//
-//            spinner.setVisibility(View.VISIBLE);
-//
-//            if (fAuth.getCurrentUser().isAnonymous()) {
-//                FirebaseUser user = fAuth.getCurrentUser();
-//
-//                fStore.collection("notes").document(user.getUid()).delete()
-//                        .addOnSuccessListener(aVoid -> Toast.makeText(UserProfile.this,
-//                                "All Temp Notes are Deleted.", Toast.LENGTH_SHORT).show());
-//
-//                // delete Temp user
-//
-//                user.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        Toast.makeText(UserProfile.this, "Temp user Deleted.",
-//                                Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//            }
-//
-//            fAuth.signInWithEmailAndPassword(mEmail, mPassword).addOnSuccessListener(authResult -> {
-//                Toast.makeText(UserProfile.this, "Success !", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//                finish();
-//            }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception e) {
-//                    Toast.makeText(UserProfile.this, "Login Failed. " + e.getMessage(),
-//                            Toast.LENGTH_SHORT).show();
-//                    spinner.setVisibility(View.GONE);
-//                }
-//            });
-//        });
-//
-//        createAcc.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Register.class)));
-//    }
-//
-//    private void showWarning() {
-//        final AlertDialog.Builder warning = new AlertDialog.Builder(this)
-//                .setTitle("Are you sure ?")
-//                .setMessage("Linking Existing Account Will delete all the temp notes. " +
-//                        "Create New Account To Save them.")
-//                .setPositiveButton("Save Notes", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        startActivity(new Intent(getApplicationContext(), Register.class));
-//                        finish();
-//                    }
-//                }).setNegativeButton("Its Ok", (dialog, which) -> {
-//                    // do nothing
-//                });
-//
-//        warning.show();
+//        logout.setOnClickListener(view -> logout());
+    }
+
+//    private void logout() {
+//        firebaseAuth.signOut();
+//        finish();
+//        startActivity(new Intent(UserProfile.this, MainActivity.class));
 //    }
 }
