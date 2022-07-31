@@ -2,6 +2,7 @@ package edu.neu.madcourse.jotly;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -40,11 +41,11 @@ public class UserProfile extends AppCompatActivity {
         });
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        databaseReference = FirebaseDatabase.getInstance().getReference("User");
         userID = user.getUid();
 
-        final TextView nameDisplay = (TextView) findViewById(R.id.fullname_display);
-        final TextView emailDisplay = (TextView) findViewById(R.id.email_display);
+        final TextView nameDisplayTV = (TextView) findViewById(R.id.fullnameTV_display);
+        final TextView emailDisplayTV = (TextView) findViewById(R.id.emailTV_display);
 //        final TextView usernameDisplay = (TextView) findViewById(R.id.userName_display);
 
         databaseReference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -53,17 +54,22 @@ public class UserProfile extends AppCompatActivity {
                 User userProfile = snapshot.getValue(User.class);
 
                 if (userProfile != null) {
-                    String fullname = userProfile.userName;
+//                    String fullname = userProfile.userName;
                     String email = userProfile.email;
+                    String username = userProfile.userName;
 
-                    nameDisplay.setText(fullname);
-                    emailDisplay.setText(email);
+                    Log.v("Username", "Username:" + username);
+
+
+                    nameDisplayTV.setText(username);
+                    emailDisplayTV.setText(email);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(UserProfile.this, "Something went wrong. Please try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(UserProfile.this, "Something went wrong." +
+                        " Please try again!", Toast.LENGTH_LONG).show();
             }
         });
 //        firebaseAuth = FirebaseAuth.getInstance();
@@ -76,4 +82,6 @@ public class UserProfile extends AppCompatActivity {
 //        finish();
 //        startActivity(new Intent(UserProfile.this, MainActivity.class));
 //    }
+
+
 }

@@ -15,7 +15,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="359dp"
+        android:layout_marginTop="326dp"
         android:text="Full Name:"
         android:textSize="15dp"
         android:textStyle="bold"
@@ -39,7 +39,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="314dp"
+        android:layout_marginTop="296dp"
         android:text="Email:"
         android:textSize="15dp"
         android:textStyle="bold"
@@ -57,14 +57,29 @@
         android:textSize="15dp"
         android:textStyle="bold" />
 
-    <ImageView
-        android:id="@+id/user_image"
+    <TextView
+        android:id="@+id/usernameTV_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="53dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="259dp"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/emailTV_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="95dp"
+        android:layout_marginTop="296dp"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/fullnameTV_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="121dp"
+        android:layout_marginTop="325dp"
+        android:text="" />
 
 
 </RelativeLayout>

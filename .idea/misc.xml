@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/layout/login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/register.xml" value="0.1" />
         <entry key="app/src/main/res/layout/reset_password.xml" value="0.2677083333333333" />
+        <entry key="app/src/main/res/layout/user_profile.xml" value="0.335" />
       </map>
     </option>
   </component>
