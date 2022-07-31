@@ -2,7 +2,6 @@ package edu.neu.madcourse.jotly;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,21 +16,17 @@ public class LogOut extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_journal_dash);
 
         logout = (Button) findViewById(R.id.logout);
         firebaseAuth = FirebaseAuth.getInstance();
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logout();
-            }
-        });
+        logout.setOnClickListener(view -> logout());
     }
 
     private void logout() {
         firebaseAuth.signOut();
         finish();
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(LogOut.this, MainActivity.class));
     }
 }

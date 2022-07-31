@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -91,8 +92,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressBar.setVisibility(View.VISIBLE);
         firebaseAuth.signInWithEmailAndPassword(uEmail, uPassword).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                //Redirect to journal dashboard
-                startActivity(new Intent(MainActivity.this, JournalDashboard.class));
+                // Verify User email in firebase
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                if (user.isEmailVerified()) {
+                    //Redirect to journal dashboard
+                    startActivity(new Intent(MainActivity.this, JournalDashboard.class));
+                } else {
+                    user.sendEmailVerification();
+                    Toast.makeText(MainActivity.this, "Please verify your email before signing in",
+                            Toast.LENGTH_LONG).show();
+                    progressBar.setVisibility(View.GONE);
+                }
+
             } else {
                 Toast.makeText(MainActivity.this, "Failed to login",
                         Toast.LENGTH_SHORT).show();

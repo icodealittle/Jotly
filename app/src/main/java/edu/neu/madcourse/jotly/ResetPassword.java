@@ -8,11 +8,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ResetPassword extends AppCompatActivity {
@@ -50,18 +47,15 @@ public class ResetPassword extends AppCompatActivity {
             return;
         }
         progressBar.setVisibility(View.VISIBLE);
-        firebaseAuth.sendPasswordResetEmail(reset_email).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(ResetPassword.this, "Check your indox for " +
-                            "reset password instruction", Toast.LENGTH_LONG).show();
-                    progressBar.setVisibility(View.GONE);
-                } else {
-                    Toast.makeText(ResetPassword.this, "Invalid Email. " +
-                            "Please try again!", Toast.LENGTH_LONG).show();
-                    progressBar.setVisibility(View.GONE);
-                }
+        firebaseAuth.sendPasswordResetEmail(reset_email).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(ResetPassword.this, "Check your indox for " +
+                        "reset password instruction", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
+            } else {
+                Toast.makeText(ResetPassword.this, "Invalid Email. " +
+                        "Please try again!", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
