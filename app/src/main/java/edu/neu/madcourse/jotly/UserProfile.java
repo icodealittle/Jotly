@@ -2,7 +2,6 @@ package edu.neu.madcourse.jotly;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -46,7 +45,7 @@ public class UserProfile extends AppCompatActivity {
 
         final TextView nameDisplayTV = (TextView) findViewById(R.id.fullnameTV_display);
         final TextView emailDisplayTV = (TextView) findViewById(R.id.emailTV_display);
-//        final TextView usernameDisplay = (TextView) findViewById(R.id.userName_display);
+        final TextView usernameDisplay = (TextView) findViewById(R.id.userName_display);
 
         databaseReference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -54,15 +53,16 @@ public class UserProfile extends AppCompatActivity {
                 User userProfile = snapshot.getValue(User.class);
 
                 if (userProfile != null) {
-//                    String fullname = userProfile.userName;
+                    String fullname = userProfile.userFullName;
                     String email = userProfile.email;
                     String username = userProfile.userName;
 
-                    Log.v("Username", "Username:" + username);
+//                    Log.v("Username", "Username:" + username);
 
 
                     nameDisplayTV.setText(username);
                     emailDisplayTV.setText(email);
+                    usernameDisplay.setText(fullname);
                 }
             }
 
@@ -76,6 +76,7 @@ public class UserProfile extends AppCompatActivity {
 //
 //        logout.setOnClickListener(view -> logout());
     }
+
 
 //    private void logout() {
 //        firebaseAuth.signOut();
