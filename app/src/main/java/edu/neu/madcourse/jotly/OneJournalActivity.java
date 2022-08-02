@@ -49,6 +49,7 @@ public void addJournal() {
         newFragment.show(getSupportFragmentManager(), "Enter link");
         }
 
+        // TODO This Dialog is used as an example, It can be replaced by a entry activity page
 @Override
 public void onDialogPositiveClick(DialogFragment dialog, String name) {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
@@ -59,6 +60,7 @@ public void onDialogPositiveClick(DialogFragment dialog, String name) {
         Snackbar.make(linkListRecyclerView,"Neither name or URL can be empty",Snackbar.LENGTH_SHORT).show();
         } else {
             entryList.add(addOneJournal);
+            //TODO update database with new entry
         Snackbar.make(linkListRecyclerView,"A new journal created",Snackbar.LENGTH_SHORT).show();
         }
         }

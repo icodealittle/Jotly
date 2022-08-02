@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity
             Snackbar.make(linkListRecyclerView,"Neither name or URL can be empty",Snackbar.LENGTH_SHORT).show();
         } else {
             journalList.add(addOneJournal);
+            //TODO update database with new journal
             Snackbar.make(linkListRecyclerView,"A new journal created",Snackbar.LENGTH_SHORT).show();
         }
     }
