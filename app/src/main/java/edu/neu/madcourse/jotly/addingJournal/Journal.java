@@ -1,7 +1,11 @@
 package edu.neu.madcourse.jotly.addingJournal;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.neu.madcourse.jotly.journalIndex.Entry;
 
@@ -20,6 +24,14 @@ public class Journal {
         this.entryList = entryList;
     }
 
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> journal = new HashMap<>();
+        journal.put("name", this.name);
+        journal.put("entries", this.entryList);
+        return journal;
+    }
+
     public void resetName(String newName) {
         this.name = newName;
     }
@@ -28,8 +40,8 @@ public class Journal {
         return this.name;
     }
 
-    public void addAnEntry(Entry anEntry) {
-        this.entryList.add(anEntry);
+    public void addAnEntry(Entry entry) {
+        this.entryList.add(entry);
     }
 
     public List<Entry> getEntryList() {

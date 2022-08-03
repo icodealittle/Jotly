@@ -3,15 +3,19 @@ package edu.neu.madcourse.jotly.journalIndex;
 import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import edu.neu.madcourse.jotly.addingJournal.Journal;
 
 
 public class Entry {
-    private String title;
+    private String title; //TODO should ensure uniqueness if this is the identifier
     private String date;
     private String time;
-    private String content;
+    private String content = null;
     private String updated;
+    private Journal journal;
 
 
     public Entry() {
@@ -43,6 +47,26 @@ public class Entry {
         entry.put("updated", updated);
 
         return entry;
+    }
+
+    //create new blank entry - TODO needs listener
+    public void createEntry(String title, String date, String time) {
+        this.title = title;
+        this.date = date;
+        this.time = time;
+    }
+
+    //update entry with content TODO needs listener
+    public void updateEntry(String title, String date, String time, String content) {
+        this.title = title;
+        this.date = date;
+        this.time = time;
+        this.content = content;
+        this.updated = date + " " + time;
+    }
+
+    public void changeTitle (String newTitle) {
+        this.title = newTitle;
     }
 
     public String getDate() {

@@ -21,59 +21,96 @@ import edu.neu.madcourse.jotly.addingJournal.Journal;
 import edu.neu.madcourse.jotly.journalIndex.Entry;
 
 public class ReadWriteToDatabase {
-    private User user;
-    private Journal journal;
-    private Entry entry;
-    private DatabaseReference jotlyDatabase;
+    FirebaseDatabase jotlyDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference jotlyDatabaseReference;
     private final String TAG = "Firebase";
 
 
-    public void initializeDatabaseReference(DatabaseReference database) {
-        jotlyDatabase = database;
+    public void initializeDatabaseReference() {
+        jotlyDatabaseReference = jotlyDatabase.getReference();
     }
 
-    private void addEntryEventListener(DatabaseReference databaseReference) {
+    //listener for writing/deleting a journal
+    private void addJournalEventListener(DatabaseReference databaseReference) {
         ValueEventListener addEntryListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Entry entry = snapshot.getValue(Entry.class);
+                Journal journal = snapshot.getValue(Journal.class);
+                //TODO use values to update UI
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to add Entry", error.toException());
+                Log.w(TAG, "Failed to write journal", error.toException());
             }
         };
         databaseReference.addValueEventListener(addEntryListener);
     }
 
-    //create new entry
-    public void createEntry(String title, String date, String time) {
-        Entry entry = new Entry(title, date, time);
-        addEntry(user.getUserId(), entry.toMap());
-        List<Entry> entries = journal.getEntryList();
-        entries.add(entry);
-    }
+    // add/update entry - update journal
+    public void writeJournal(int userID, Journal journal) {
+        String key = jotlyDatabaseReference.child("journal").push().getKey();
+        Map<String, Object> journalValues = journal.toMap();
 
-    //update entry
-    public void updateEntry(String title, String date, String time, String content) {
-        Entry entry = new Entry(title, date, time, content);
-        addEntry(user.getUserId(), entry.toMap());
-        List<Entry> entries = journal.getEntryList();
-        entries.add(entry);
-    }
-
-    // add entry - update journal
-    public void addEntry(int userId, Map<String, Object> entry) {
-        String key = jotlyDatabase.child("entry").push().getKey();
         Map<String, Object> journalsUpdates = new HashMap<>();
-        journalsUpdates.put("/entry" + key, entry);
-        journalsUpdates.put("/user" + userId + "/journal/" + key, entry);
+        journalsUpdates.put("/journal" + key, journalValues);
+        journalsUpdates.put("/user" + userID + "/journals/" + key, journalValues);
 
         try {
-            jotlyDatabase.updateChildren(journalsUpdates);
+            jotlyDatabaseReference.updateChildren(journalsUpdates);
         } catch (DatabaseException e) {
-            Log.d(TAG, "Failed to add new journal with error: " + e);
+            Log.d(TAG, "Failed to write journal with error: " + e);
+        }
+    }
+
+    public void deleteJournal(Journal journal) {
+        String path = journal.getName();
+        try {
+            jotlyDatabase.getReference(path).setValue(null);
+        } catch (DatabaseException e) {
+            Log.d(TAG, "Failed to delete journal with error: " + e);
+        }
+    }
+
+    //listener for writing/deleting an entry
+    private void writeEntryEventListener(DatabaseReference databaseReference) {
+        ValueEventListener addEntryListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Entry entry = snapshot.getValue(Entry.class);
+                //TODO use values to update UI
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "Failed to write entry", error.toException());
+            }
+        };
+        databaseReference.addValueEventListener(addEntryListener);
+    }
+
+    // add/update entry - update journal
+    public void writeEntry(int userID, Entry entry) {
+        String key = jotlyDatabaseReference.child("entry").push().getKey();
+        Map<String, Object> entryValues = entry.toMap();
+
+        Map<String, Object> journalUpdates = new HashMap<>();
+        journalUpdates.put("/entry" + key, entryValues);
+        journalUpdates.put("/user" + userID + "/journal/" + key, entryValues);
+
+        try {
+            jotlyDatabaseReference.updateChildren(journalUpdates);
+        } catch (DatabaseException e) {
+            Log.d(TAG, "Failed to write journal entry with error: " + e);
+        }
+    }
+
+    public void deleteEntry(Entry entry) {
+        String path = entry.getTitle();
+        try {
+            jotlyDatabase.getReference(path).setValue(null);
+        } catch (DatabaseException e) {
+            Log.d(TAG, "Failed to delete journal entry with error: " + e);
         }
     }
 
