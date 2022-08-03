@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -14,21 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseException;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import edu.neu.madcourse.jotly.addingJournal.Journal;
-import edu.neu.madcourse.jotly.journalIndex.Entry;
 
 public class MainActivity extends AppCompatActivity {
     private TextView createAcct;
@@ -37,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText userEmail, userPassword;
     private FirebaseAuth firebaseAuth;
     private ProgressBar progressBar;
+    private ReadWriteToDatabase readWriteToDatabase;
 
 
     @Override
@@ -55,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         userPassword = findViewById(R.id.userPassword);
         progressBar = findViewById(R.id.progressBar2);
         firebaseAuth = FirebaseAuth.getInstance();
+
+        readWriteToDatabase.initializeDatabaseReference();
     }
 
     public void onClick(View view) {
