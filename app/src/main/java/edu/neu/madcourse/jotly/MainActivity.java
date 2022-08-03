@@ -28,19 +28,16 @@ import java.util.List;
 import java.util.Map;
 
 import edu.neu.madcourse.jotly.addingJournal.Journal;
+import edu.neu.madcourse.jotly.journalIndex.Entry;
 
 public class MainActivity extends AppCompatActivity {
-    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    private DatabaseReference jotlyDatabase;
-    private Journal journal;
     private TextView createAcct;
     private TextView resetPass;
     private Button userLogin;
     private EditText userEmail, userPassword;
     private FirebaseAuth firebaseAuth;
     private ProgressBar progressBar;
-    private User user;
-    private final String TAG = "Firebase";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
         userPassword = findViewById(R.id.userPassword);
         progressBar = findViewById(R.id.progressBar2);
         firebaseAuth = FirebaseAuth.getInstance();
-
-        initializeDatabaseReference();
     }
 
     public void onClick(View view) {
@@ -123,84 +118,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void initializeDatabaseReference() {
-        jotlyDatabase = firebaseDatabase.getReference();
-    }
 
-    /*private void addJournalEventListener(DatabaseReference databaseReference) {
-        ValueEventListener addJournalListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Journal journal = snapshot.getValue(Journal.class);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to add Journal", error.toException());
-            }
-        };
-        databaseReference.addValueEventListener(addJournalListener);
-    }
 
-    //create new journal
-    //private void createJournal(){}
-
-    // add journal - update journals
-    public void addJournal(Journal journal) {
-        String key = jotlyDatabase.child("journals").push().getKey();
-        List<Journal> journals = user.getJournals();
-        journals.add(journal);
-
-        Map<String, Object> journalsUpdates = new HashMap<>();
-        journalsUpdates.put("/journals" + key, journals);
-        journalsUpdates.put("/user" +  user+ "/" + key, journal);
-
-        jotlyDatabase.updateChildren(journalsUpdates);
-    }*/
-
-    private void addEntryEventListener(DatabaseReference databaseReference) {
-        ValueEventListener addEntryListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Entry entry = snapshot.getValue(Entry.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to add Entry", error.toException());
-            }
-        };
-        databaseReference.addValueEventListener(addEntryListener);
-    }
-
-    //create new entry
-    public void createEntry(String title, String content, Date created) {
-        Entry entry = new Entry(title, content, created);
-        addEntry(user.getUserId(), entry.toMap());
-        List<Entry> entries = journal.getEntries();
-        entries.add(entry);
-    }
-
-    //update entry
-    public void updateEntry(String title, String content, Date updated) {
-        Entry entry = new Entry(updated, title, content);
-        addEntry(user.getUserId(), entry.toMap());
-        List<Entry> entries = journal.getEntries();
-        entries.add(entry);
-    }
-
-    // add entry - update journal
-    public void addEntry(int userId, Map<String, Object> entry) {
-        String key = jotlyDatabase.child("entry").push().getKey();
-        Map<String, Object> journalsUpdates = new HashMap<>();
-        journalsUpdates.put("/entry" + key, entry);
-        journalsUpdates.put("/user" + userId + "/journal/" + key, entry);
-
-        try {
-            jotlyDatabase.updateChildren(journalsUpdates);
-        } catch (DatabaseException e) {
-            Log.d(TAG, "Failed to add new journal with error: " + e);
-        }
     }
 
 

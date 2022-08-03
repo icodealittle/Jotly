@@ -3,7 +3,6 @@ package edu.neu.madcourse.jotly.addingJournal;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.neu.madcourse.jotly.Entry;
 import edu.neu.madcourse.jotly.journalIndex.Entry;
 
 public class Journal {
@@ -31,5 +30,9 @@ public class Journal {
 
     public void addAnEntry(Entry anEntry) {
         this.entryList.add(anEntry);
+    }
+
+    public List<Entry> getEntryList() {
+        return entryList;
     }
 }
