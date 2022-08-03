@@ -3,6 +3,8 @@ package edu.neu.madcourse.jotly;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.neu.madcourse.jotly.addingJournal.Journal;
+
 public class User {
     private int userID;
     public String userName, email, password, confirmPass;

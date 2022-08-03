@@ -4,8 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/cwil2/AndroidStudioProjects/Jotly/app/src/main/res/layout/activity_main.xml" value="0.24814814814814815" />
+        <entry key="..\:/Users/cwil2/AndroidStudioProjects/Jotly/app/src/main/res/layout/add_entry_fab.xml" value="0.16944444444444445" />
+        <entry key="..\:/Users/cwil2/AndroidStudioProjects/Jotly/app/src/main/res/layout/add_journal_fab.xml" value="0.16944444444444445" />
         <entry key="..\:/Users/cwil2/AndroidStudioProjects/Jotly/app/src/main/res/layout/firebase.xml" value="0.1814814814814815" />
+        <entry key="..\:/Users/cwil2/AndroidStudioProjects/Jotly/app/src/main/res/layout/item_entry.xml" value="0.16944444444444445" />
+        <entry key="..\:/Users/cwil2/AndroidStudioProjects/Jotly/app/src/main/res/layout/one_journal.xml" value="0.16944444444444445" />
         <entry key="..\:/Users/cwil2/AndroidStudioProjects/Jotly/app/src/main/res/layout/register.xml" value="0.1" />
+        <entry key="..\:/Users/cwil2/AndroidStudioProjects/Jotly/app/src/main/res/layout/user_profile.xml" value="0.20185185185185187" />
       </map>
     </option>
   </component>
