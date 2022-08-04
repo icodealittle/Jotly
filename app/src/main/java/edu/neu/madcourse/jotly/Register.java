@@ -22,6 +22,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private TextView loginTV;
     private TextView registerUser;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -100,8 +100,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(new Intent(MainActivity.this, UserProfile.class));
                 } else {
                     user.sendEmailVerification();
-                    Toast.makeText(MainActivity.this, "Please verify your email before signing in",
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Please verify your email " +
+                            "before signing in", Toast.LENGTH_LONG).show();
                     progressBar.setVisibility(View.GONE);
                 }
 

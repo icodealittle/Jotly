@@ -24,6 +24,7 @@ public class UserProfile extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private String userID;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +79,7 @@ public class UserProfile extends AppCompatActivity {
     }
 
 
-//    private void logout() {
+    //    private void logout() {
 //        firebaseAuth.signOut();
 //        finish();
 //        startActivity(new Intent(UserProfile.this, MainActivity.class));
