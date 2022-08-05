@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import edu.neu.madcourse.jotly.MainActivity;
+import edu.neu.madcourse.jotly.HomePageActivity;
 import edu.neu.madcourse.jotly.OneJournalActivity;
 import edu.neu.madcourse.jotly.R;
 import edu.neu.madcourse.jotly.addingJournal.Journal;

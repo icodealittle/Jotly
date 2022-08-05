@@ -18,7 +18,7 @@ import edu.neu.madcourse.jotly.addingJournal.FABDialog;
 import edu.neu.madcourse.jotly.addingJournal.Journal;
 import edu.neu.madcourse.jotly.addingJournal.JournalAdaptor;
 
-public class MainActivity extends AppCompatActivity
+public class HomePageActivity extends AppCompatActivity
         implements FABDialog.NoticeDialogListener {
     FloatingActionButton addingJournalFAB;
     RecyclerView linkListRecyclerView;

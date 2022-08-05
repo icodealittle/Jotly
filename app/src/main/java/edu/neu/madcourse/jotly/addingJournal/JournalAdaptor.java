@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import edu.neu.madcourse.jotly.MainActivity;
+import edu.neu.madcourse.jotly.HomePageActivity;
 import edu.neu.madcourse.jotly.OneJournalActivity;
 import edu.neu.madcourse.jotly.R;
 
@@ -42,7 +42,7 @@ public class JournalAdaptor extends RecyclerView.Adapter<JournalViewHolder> {
             @Override
             public void onClick(View v) {
                 //TODO: Click the name to open a journal in a new activity
-                MainActivity activity = (MainActivity) context;
+                HomePageActivity activity = (HomePageActivity) context;
                 Intent i = new Intent(activity, OneJournalActivity.class);
                 activity.startActivity(i);
             }
