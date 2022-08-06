@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView createAcct;
     private TextView resetPass;
     private Button userLogin;
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.loginBtn:
-                loginActvity();
+                loginActivity();
                 break;
             /*case R.id.forgotPasword:
                 Intent newPassword = new Intent(MainActivity.this, ResetPassword.class);
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void loginActvity() {
+    private void loginActivity() {
 
         String uEmail = userEmail.getText().toString().trim();
         String uPassword = userPassword.getText().toString().trim();
@@ -96,24 +96,14 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth.signInWithEmailAndPassword(uEmail, uPassword).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 //Redirect to journal dashboard
-                startActivity(new Intent(MainActivity.this, JournalDashboard.class));
+                startActivity(new Intent(MainActivity.this, UserProfile.class));
             } else {
                 Toast.makeText(MainActivity.this, "Failed to login",
                         Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
             }
         });
-
+    }
     }
 
 
-
-
-    }
-
-
-
-
-
-
-}

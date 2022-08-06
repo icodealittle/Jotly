@@ -21,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth fAuth;
-    private EditText fullName, email, password, confirmPassword;
+    private EditText fullName, email, password, confirmPassword, uFullname;
     private ProgressBar progressBar;
     private TextView loginTV;
     private TextView registerUser;
@@ -40,6 +40,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         password = (EditText) findViewById(R.id.password);
         confirmPassword = (EditText) findViewById(R.id.passwordConfirm);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        uFullname = (EditText) findViewById(R.id.fullname);
     }
 
     @Override
@@ -56,7 +57,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         String userEmail = email.getText().toString().trim();
         String userPass = password.getText().toString().trim();
         String userPass1 = confirmPassword.getText().toString().trim();
-
+        String userFullname = uFullname.getText().toString().trim();
 
         if (userName.isEmpty()) {
             fullName.setError("Field is required!");
@@ -101,7 +102,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         progressBar.setVisibility(View.VISIBLE);
         fAuth.createUserWithEmailAndPassword(userEmail, userPass).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                User user = new User(count, userName, userEmail, userPass, userPass1);
+                User user = new User(count, userName, userEmail, userPass, userPass1, userFullname);
                 FirebaseDatabase.getInstance().getReference("User").child(FirebaseAuth
                                 .getInstance().getCurrentUser().getUid()).setValue(user)
                         .addOnCompleteListener(task1 -> {
