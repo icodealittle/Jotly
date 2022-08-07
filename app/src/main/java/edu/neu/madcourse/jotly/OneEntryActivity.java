@@ -9,6 +9,6 @@ import edu.neu.madcourse.jotly.R;
 public class OneEntryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.entry_activity);
+        setContentView(R.layout.one_entry);
     }
 }
