@@ -11,8 +11,10 @@
         <entry key="app/src/main/res/layout/add_journal_fab.xml" value="0.19067028985507245" />
         <entry key="app/src/main/res/layout/entry_activity.xml" value="0.29053955078125004" />
         <entry key="app/src/main/res/layout/item_entry.xml" value="0.19067028985507245" />
+        <entry key="app/src/main/res/layout/item_journal.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/location.xml" value="0.2833333333333333" />
         <entry key="app/src/main/res/layout/login.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/one_journal.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/register.xml" value="0.375" />
         <entry key="app/src/main/res/layout/reset_password.xml" value="0.2677083333333333" />
         <entry key="app/src/main/res/layout/user_profile.xml" value="0.45" />

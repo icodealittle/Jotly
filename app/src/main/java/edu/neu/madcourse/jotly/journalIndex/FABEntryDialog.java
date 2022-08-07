@@ -24,12 +24,12 @@ public class FABEntryDialog extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
 
 
-        builder.setView(inflater.inflate(R.layout.add_entry_fab, null))
+        builder.setView(inflater.inflate(R.layout.entry_activity, null))
                 .setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // Get user input
-                        inputName = ((AlertDialog)dialog).findViewById(R.id.entryName);
+                        inputName = ((AlertDialog)dialog).findViewById(R.id.inputName);
                         String name = inputName.getText().toString();
 
                         listener.onDialogPositiveClick(FABEntryDialog.this, name);

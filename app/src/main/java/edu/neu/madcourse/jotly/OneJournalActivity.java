@@ -30,6 +30,8 @@ protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.one_journal);
 
+        //TODO Display all journals
+
         addingJournalFAB = findViewById(R.id.fabEntry);
         addingJournalFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +63,7 @@ public void onDialogPositiveClick(DialogFragment dialog, String name) {
         } else {
             entryList.add(addOneJournal);
             //TODO update database with new entry
-        Snackbar.make(linkListRecyclerView,"A new journal created",Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(linkListRecyclerView,"A new journal created",Snackbar.LENGTH_SHORT).show();
         }
         }
 }
