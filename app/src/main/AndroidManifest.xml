@@ -24,6 +24,7 @@
         </activity>
 
         <activity android:name=".OneJournalActivity"> </activity>
+        <activity android:name=".OneEntryActivity"> </activity>
     </application>
 
 </manifest>

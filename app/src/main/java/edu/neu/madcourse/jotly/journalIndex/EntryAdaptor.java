@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import edu.neu.madcourse.jotly.HomePageActivity;
+import edu.neu.madcourse.jotly.OneEntryActivity;
 import edu.neu.madcourse.jotly.OneJournalActivity;
 import edu.neu.madcourse.jotly.R;
 import edu.neu.madcourse.jotly.addingJournal.Journal;
@@ -40,7 +41,9 @@ public class EntryAdaptor extends RecyclerView.Adapter<EntryViewHolder> {
             @Override
             public void onClick(View v) {
                 //TODO: Click the name to open a entry in a new activity
-
+                OneJournalActivity activity = (OneJournalActivity) context;
+                Intent i = new Intent(activity, OneEntryActivity.class);
+                activity.startActivity(i);
             }
         });
     }
