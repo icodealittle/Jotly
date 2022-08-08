@@ -50,7 +50,6 @@ public void addJournal() {
         DialogFragment newFragment = new FABEntryDialog();
         newFragment.show(getSupportFragmentManager(), "Enter link");
         }
-
         // TODO This Dialog is used as an example, It can be replaced by a entry activity page
 @Override
 public void onDialogPositiveClick(DialogFragment dialog, String name) {
@@ -65,5 +64,5 @@ public void onDialogPositiveClick(DialogFragment dialog, String name) {
             //TODO update database with new entry
             Snackbar.make(linkListRecyclerView,"A new journal created",Snackbar.LENGTH_SHORT).show();
         }
-        }
+    }
 }

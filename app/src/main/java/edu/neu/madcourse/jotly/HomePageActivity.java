@@ -29,6 +29,10 @@ public class HomePageActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // get Login user
+        // i.putExtra("user", user);
+        // curreentUser = (User)getIntent().getSerializableExtra("user");
+
         addingJournalFAB = findViewById(R.id.floatingActionButton);
         addingJournalFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +41,7 @@ public class HomePageActivity extends AppCompatActivity
             }
         });
 
+        // TODO Obtain all journals and display them in the app
         linkListRecyclerView = findViewById(R.id.recycleView);
         linkListRecyclerView.setHasFixedSize(true);
         linkListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -55,7 +60,7 @@ public class HomePageActivity extends AppCompatActivity
             Snackbar.make(linkListRecyclerView,"Neither name or URL can be empty",Snackbar.LENGTH_SHORT).show();
         } else {
             journalList.add(addOneJournal);
-            //TODO update database with new journal
+            //TODO update database with new journal named addOneJournal
             Snackbar.make(linkListRecyclerView,"A new journal created",Snackbar.LENGTH_SHORT).show();
         }
     }

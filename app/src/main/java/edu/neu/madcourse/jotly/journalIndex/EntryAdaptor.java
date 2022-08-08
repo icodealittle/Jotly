@@ -40,7 +40,8 @@ public class EntryAdaptor extends RecyclerView.Adapter<EntryViewHolder> {
         holder.nameTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Click the name to open a entry in a new activity
+                //TODO: Use the journal name to find entrylist which used in new activity
+
                 OneJournalActivity activity = (OneJournalActivity) context;
                 Intent i = new Intent(activity, OneEntryActivity.class);
                 activity.startActivity(i);
