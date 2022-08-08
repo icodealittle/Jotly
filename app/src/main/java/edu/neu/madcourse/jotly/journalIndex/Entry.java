@@ -73,7 +73,7 @@ public class Entry {
         return this.content;
     }
 
-    public String getLocation(String location){
+    public String getLocation(){
         return this.location;
     }
 
