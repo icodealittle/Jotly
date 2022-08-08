@@ -106,8 +106,8 @@
         android:text="Logout"
         android:textSize="10dp" />
 
-    <ImageButton
-        android:id="@+id/imageButton2"
+    <ImageView
+        android:id="@+id/imageBtn"
         android:layout_width="124dp"
         android:layout_height="130dp"
         android:layout_alignParentTop="true"
