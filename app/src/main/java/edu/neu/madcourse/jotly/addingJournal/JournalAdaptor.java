@@ -44,6 +44,7 @@ public class JournalAdaptor extends RecyclerView.Adapter<JournalViewHolder> {
                 //TODO: Click the name to open a journal in a new activity
                 HomePageActivity activity = (HomePageActivity) context;
                 Intent i = new Intent(activity, OneJournalActivity.class);
+                i.putExtra("journal", journalList.get(position));
                 activity.startActivity(i);
             }
         });

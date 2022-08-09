@@ -25,4 +25,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerViewEntry"
         app:srcCompat="@android:drawable/ic_input_add" />
+
+    <TextView
+        android:id="@+id/journalNmaeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current Journal"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewEntry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,10 +2,12 @@ package edu.neu.madcourse.jotly.journalIndex;
 
 import android.media.Image;
 
+import java.io.Serializable;
+
 /**
  * This class presents a journal object
  */
-public class Entry {
+public class Entry implements Serializable {
     private String date;
     private String time;
     private String title;
@@ -101,6 +103,4 @@ public class Entry {
     public void changeTitle(String newTitle) {
         this.title = newTitle;
     }
-
-
 }

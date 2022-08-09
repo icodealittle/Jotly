@@ -2,6 +2,7 @@ package edu.neu.madcourse.jotly;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import edu.neu.madcourse.jotly.addingJournal.Journal;
 import edu.neu.madcourse.jotly.journalIndex.Entry;
 import edu.neu.madcourse.jotly.journalIndex.EntryAdaptor;
 import edu.neu.madcourse.jotly.journalIndex.FABEntryDialog;
@@ -24,12 +26,17 @@ public class OneJournalActivity extends AppCompatActivity implements FABEntryDia
         FloatingActionButton addingJournalFAB;
         RecyclerView linkListRecyclerView;
         List<Entry> entryList = new ArrayList<>();
+        Journal currentJournal;
+        TextView nameTV;
 
 @Override
 protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.one_journal);
 
+        currentJournal = (Journal) getIntent().getSerializableExtra("journal");
+        nameTV = findViewById(R.id.journalNmaeTV);
+        nameTV.setText(currentJournal.getName());
         //TODO Display all journals
 
         addingJournalFAB = findViewById(R.id.fabEntry);

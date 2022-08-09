@@ -1,11 +1,12 @@
 package edu.neu.madcourse.jotly.addingJournal;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.neu.madcourse.jotly.journalIndex.Entry;
 
-public class Journal {
+public class Journal implements Serializable {
     private String name;
     private List<Entry> entryList = new ArrayList<>();
 
