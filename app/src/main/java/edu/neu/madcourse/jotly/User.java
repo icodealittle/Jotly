@@ -13,6 +13,7 @@ public class User {
         this.name = "New User";
         this.password = password;
         this.username = "New User";
+
     }
 
     public User(String email, String password, String username, String name) {
