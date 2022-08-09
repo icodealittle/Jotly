@@ -101,4 +101,6 @@ public class Entry {
     public void changeTitle(String newTitle) {
         this.title = newTitle;
     }
+
+
 }
