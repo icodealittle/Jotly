@@ -32,6 +32,15 @@ public class Entry {
         this.updateTime = date + " " + time;
     }
 
+    public Entry(String date, String time, String title, String content, String location){
+        this.date = date;
+        this.time = time;
+        this.title = title;
+        this.content = content;
+        this.location = location;
+        this.updateTime = date + " " + time;
+    }
+
     public Entry(String date, String time, String title, String content, Image mood){
         this.date = date;
         this.time = time;
@@ -73,7 +82,7 @@ public class Entry {
         return this.content;
     }
 
-    public String getLocation(String location){
+    public String getLocation(){
         return this.location;
     }
 
