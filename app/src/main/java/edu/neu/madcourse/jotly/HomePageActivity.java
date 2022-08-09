@@ -60,6 +60,7 @@ public class HomePageActivity extends AppCompatActivity
             Snackbar.make(linkListRecyclerView,"Neither name or URL can be empty",Snackbar.LENGTH_SHORT).show();
         } else {
             journalList.add(addOneJournal);
+            linkListRecyclerView.getAdapter().notifyDataSetChanged();
             //TODO update database with new journal named addOneJournal
             Snackbar.make(linkListRecyclerView,"A new journal created",Snackbar.LENGTH_SHORT).show();
         }

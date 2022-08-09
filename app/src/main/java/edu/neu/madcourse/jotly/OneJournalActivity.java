@@ -43,31 +43,32 @@ protected void onCreate(Bundle savedInstanceState) {
         addingJournalFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addJournal();
+                addEntry();
                 }
                 });
 
-                linkListRecyclerView = findViewById(R.id.recyclerViewEntry);
-                linkListRecyclerView.setHasFixedSize(true);
-                linkListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-                linkListRecyclerView.setAdapter(new EntryAdaptor(entryList, this));
+        linkListRecyclerView = findViewById(R.id.recyclerViewEntry);
+        linkListRecyclerView.setHasFixedSize(true);
+        linkListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        linkListRecyclerView.setAdapter(new EntryAdaptor(entryList, this));
         }
 
-public void addJournal() {
+public void addEntry() {
         DialogFragment newFragment = new FABEntryDialog();
         newFragment.show(getSupportFragmentManager(), "Enter link");
         }
         // TODO This Dialog is used as an example, It can be replaced by a entry activity page
 @Override
-public void onDialogPositiveClick(DialogFragment dialog, String name) {
+public void onDialogPositiveClick(DialogFragment dialog, String name, String content) {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-        String date = timeStamp.substring(0,7);
-        String time = timeStamp.substring(9);
-        Entry addOneJournal = new Entry(date, time, name);
+        String date = timeStamp.substring(0,4) + "-" +timeStamp.substring(4,6) +"-" +timeStamp.substring(6,8);
+        String time = timeStamp.substring(9,11) + ":" + timeStamp.substring(11,13);
+        Entry addOneEntry = new Entry(date, time, name, content);
         if (name.isEmpty() || name == null) {
         Snackbar.make(linkListRecyclerView,"Neither name or URL can be empty",Snackbar.LENGTH_SHORT).show();
         } else {
-            entryList.add(addOneJournal);
+            entryList.add(addOneEntry);
+            linkListRecyclerView.getAdapter().notifyDataSetChanged();
             //TODO update database with new entry
             Snackbar.make(linkListRecyclerView,"A new journal created",Snackbar.LENGTH_SHORT).show();
         }

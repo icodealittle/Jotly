@@ -44,6 +44,7 @@ public class EntryAdaptor extends RecyclerView.Adapter<EntryViewHolder> {
 
                 OneJournalActivity activity = (OneJournalActivity) context;
                 Intent i = new Intent(activity, OneEntryActivity.class);
+                i.putExtra("entry", entryList.get(position));
                 activity.startActivity(i);
             }
         });

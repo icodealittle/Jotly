@@ -30,9 +30,10 @@ public class FABEntryDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         // Get user input
                         inputName = ((AlertDialog)dialog).findViewById(R.id.inputName);
+                        inputContent = ((AlertDialog)dialog).findViewById(R.id.inputContent);
                         String name = inputName.getText().toString();
-
-                        listener.onDialogPositiveClick(FABEntryDialog.this, name);
+                        String content = inputContent.getText().toString();
+                        listener.onDialogPositiveClick(FABEntryDialog.this, name, content);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -44,7 +45,7 @@ public class FABEntryDialog extends DialogFragment {
     }
 
     public interface NoticeDialogListener {
-        public void onDialogPositiveClick(DialogFragment dialog, String name);
+        public void onDialogPositiveClick(DialogFragment dialog, String name, String content);
     }
     @Override
     public void onAttach(Context context) {
