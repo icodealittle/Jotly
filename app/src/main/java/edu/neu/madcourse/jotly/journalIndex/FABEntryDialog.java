@@ -15,7 +15,7 @@ import edu.neu.madcourse.jotly.R;
 
 public class FABEntryDialog extends DialogFragment {
     FABEntryDialog.NoticeDialogListener listener;
-    private EditText inputName;
+    private EditText inputName, inputContent;
     View dialogView;
 
     @Override
