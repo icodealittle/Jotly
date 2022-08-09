@@ -40,10 +40,10 @@ protected void onCreate(Bundle savedInstanceState) {
                 }
                 });
 
-                linkListRecyclerView = findViewById(R.id.recyclerViewEntry);
-                linkListRecyclerView.setHasFixedSize(true);
-                linkListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-                linkListRecyclerView.setAdapter(new EntryAdaptor(entryList, this));
+        linkListRecyclerView = findViewById(R.id.recyclerViewEntry);
+        linkListRecyclerView.setHasFixedSize(true);
+        linkListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        linkListRecyclerView.setAdapter(new EntryAdaptor(entryList, this));
         }
 
 public void addJournal() {
@@ -56,11 +56,11 @@ public void onDialogPositiveClick(DialogFragment dialog, String name) {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
         String date = timeStamp.substring(0,7);
         String time = timeStamp.substring(9);
-        Entry addOneJournal = new Entry(date, time, name);
+        Entry addOneEntry = new Entry(date, time, name);
         if (name.isEmpty() || name == null) {
         Snackbar.make(linkListRecyclerView,"Neither name or URL can be empty",Snackbar.LENGTH_SHORT).show();
         } else {
-            entryList.add(addOneJournal);
+            entryList.add(addOneEntry);
             //TODO update database with new entry
             Snackbar.make(linkListRecyclerView,"A new journal created",Snackbar.LENGTH_SHORT).show();
         }

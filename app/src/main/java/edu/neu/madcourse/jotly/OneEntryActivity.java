@@ -20,10 +20,10 @@ public class OneEntryActivity extends AppCompatActivity {
         setContentView(R.layout.one_entry);
 
 
-        oneEntry = (Entry)getIntent().getSerializableExtra("oneEntry");
-        titleTV.setText(oneEntry.getTitle());
-        contentTV.setText(oneEntry.getContent());
-        locaTV.setText(oneEntry.getLocation());
+//        oneEntry = (Entry)getIntent().getSerializableExtra("oneEntry");
+//        titleTV.setText(oneEntry.getTitle());
+//        contentTV.setText(oneEntry.getContent());
+//        locaTV.setText(oneEntry.getLocation());
         //moodIV.setImage
     }
 }
