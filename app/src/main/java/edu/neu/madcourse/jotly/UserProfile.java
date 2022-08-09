@@ -2,7 +2,6 @@ package edu.neu.madcourse.jotly;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,8 +12,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,26 +21,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserProfile extends AppCompatActivity {
+    public static final int CAM_PER = 1;
+    public static final int CAM_PIC_CODE = 2;
+    Uri imageURI;
+    ValueEventListener valueEventListener;
     private Button logout;
     private FirebaseUser user;
     private DatabaseReference databaseReference;
     private String userID;
-
-    FirebaseStorage firebaseStorage;
-    public static final int CAM_PER = 1;
-    public static final int CAM_PIC_CODE = 2;
-    Uri imageURI;
-    private TextView changePic;
-    private CircleImageView userProfPic;
-
-    //    ActivityResultLauncher<String> getContent;
+    //Method in replace of deprecated for startactivityforresult
     ActivityResultLauncher<String> getContent = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
         @Override
         public void onActivityResult(Uri result) {
@@ -53,36 +45,21 @@ public class UserProfile extends AppCompatActivity {
             }
         }
     });
-
-    //Method in replace of deprecated for startactivityforresult
+    private TextView changePic;
+    private CircleImageView userProfPic;
+    private FirebaseStorage firebaseStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile);
-        firebaseStorage = FirebaseStorage.getInstance();
-
-//        userProfPic = (ImageView) findViewById(R.id.imageBtn);
-//        changePic = (TextView) findViewById(R.id.changeProfilePic);
-//
-//
-//        logout = (Button) findViewById(R.id.signout);
-//
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                FirebaseAuth.getInstance().signOut();
-//                startActivity(new Intent(UserProfile.this, MainActivity.class));
-//            }
-//        });
-//
         user = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("User");
         userID = user.getUid();
 
-        final TextView nameDisplayTV = (TextView) findViewById(R.id.fullnameTV_display);
-        final TextView emailDisplayTV = (TextView) findViewById(R.id.emailTV_display);
-        final TextView usernameDisplay = (TextView) findViewById(R.id.userName_display);
+        final TextView nameDisplayTV = findViewById(R.id.fullnameTV_display);
+        final TextView emailDisplayTV = findViewById(R.id.emailTV_display);
+        final TextView usernameDisplay = findViewById(R.id.userName_display);
 
         databaseReference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -110,35 +87,23 @@ public class UserProfile extends AppCompatActivity {
         userProfPic = findViewById(R.id.imageBtn);
         changePic = findViewById(R.id.changeProfilePic);
 
-        userProfPic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getContent.launch("image/*");
-            }
-        });
+        userProfPic.setOnClickListener(view -> getContent.launch("image/*"));
 
-        changePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                uploadImage();
-            }
-        });
+        changePic.setOnClickListener(view -> uploadImage());
     }
 
     private void uploadImage() {
         if (imageURI != null) {
             StorageReference storageReference = firebaseStorage.getReference().child("images/" + UUID.randomUUID().toString());
 
-            storageReference.putFile(imageURI).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(UserProfile.this, "New Profile is set", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(UserProfile.this, "Something Wrong. Please try again", Toast.LENGTH_SHORT).show();
-                    }
+            storageReference.putFile(imageURI).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Toast.makeText(UserProfile.this, "New Profile is set", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(UserProfile.this, "Something Wrong. Please try again", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
+
 }
