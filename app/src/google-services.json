@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1050759522637",
+    "project_id": "madsu2022-finalproject",
+    "storage_bucket": "madsu2022-finalproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050759522637:android:df42519bf896e1cf802f04",
+        "android_client_info": {
+          "package_name": "edu.neu.madcourse.jotly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1050759522637-vga51vmedkd916vgc9e5a1s2ellueqhk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.neu.madcourse.jotly",
+            "certificate_hash": "faa63d0cc2d4305529b77d8aeca34950218ee38b"
+          }
+        },
+        {
+          "client_id": "1050759522637-s5h7r5ffatd6m5go42tr67i0ve8s1k7u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVnBUg5uNhivM-Iy2pIk9Ii03_K1-_QAQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1050759522637-s5h7r5ffatd6m5go42tr67i0ve8s1k7u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
