@@ -12,8 +12,12 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,20 +26,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.UUID;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserProfile extends AppCompatActivity {
-    public static final int CAM_PER = 1;
     public static final int CAM_PIC_CODE = 2;
     Uri imageURI;
-    ValueEventListener valueEventListener;
-    private Button logout;
-    private FirebaseUser user;
-    private DatabaseReference databaseReference;
-    private String userID;
-    //Method in replace of deprecated for startactivityforresult
+    //    //Method in replace of deprecated for startactivityforresult
     ActivityResultLauncher<String> getContent = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
         @Override
         public void onActivityResult(Uri result) {
@@ -45,6 +41,12 @@ public class UserProfile extends AppCompatActivity {
             }
         }
     });
+    ValueEventListener valueEventListener;
+    private Button logout;
+    private FirebaseUser user;
+    private DatabaseReference databaseReference;
+    private String userID;
+    private int TAKE_CAM_PIC = 1;
     private TextView changePic;
     private CircleImageView userProfPic;
     private FirebaseStorage firebaseStorage;
@@ -89,21 +91,96 @@ public class UserProfile extends AppCompatActivity {
 
         userProfPic.setOnClickListener(view -> getContent.launch("image/*"));
 
-        changePic.setOnClickListener(view -> uploadImage());
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user.getPhotoUrl() != null) {
+            Glide.with(UserProfile.this).load(user.getPhotoUrl()).into(userProfPic);
+        }
+
+
     }
 
     private void uploadImage() {
         if (imageURI != null) {
-            StorageReference storageReference = firebaseStorage.getReference().child("images/" + UUID.randomUUID().toString());
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Profile").child(userID + ".jpeg");
 
             storageReference.putFile(imageURI).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
+                    getImageURL(storageReference);
                     Toast.makeText(UserProfile.this, "New Profile is set", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(UserProfile.this, "Something Wrong. Please try again", Toast.LENGTH_SHORT).show();
                 }
             });
         }
+    }
+
+//    public void handleImageClick(View view) {
+//
+//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        if (intent.resolveActivity(getPackageManager()) != null){
+//            startActivityForResult(intent, TAKE_CAM_PIC);
+//        }
+//    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == TAKE_CAM_PIC){
+//            switch (resultCode){
+//                case RESULT_OK:
+//                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+//                    userProfPic.setImageBitmap(bitmap);
+//                    uploadImage(bitmap);
+//            }
+//        }
+//    }
+
+//    private void uploadImage(Bitmap bitmap) {
+//
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+//
+//        String UserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Profile").child(userID + ".jpeg");
+//
+//        storageReference.putBytes(byteArrayOutputStream.toByteArray()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                getImageURL(storageReference);
+//            }
+//        });
+//    }
+
+    private void getImageURL(StorageReference storageReference) {
+        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                setUserProfileUrl(uri);
+            }
+        });
+    }
+
+    private void setUserProfileUrl(Uri uri) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                .setPhotoUri(uri)
+                .build();
+
+        user.updateProfile(request)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(UserProfile.this, "Updated succesfully", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(UserProfile.this, "Profile image failed...", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
 }

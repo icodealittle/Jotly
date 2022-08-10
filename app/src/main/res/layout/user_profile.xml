@@ -108,11 +108,11 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageBtn"
-        android:layout_width="124dp"
-        android:layout_height="130dp"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="69dp"
-        app:srcCompat="@drawable/profile" />
+        android:layout_marginTop="85dp"
+        android:src="@drawable/profile" />
 
 </RelativeLayout>
