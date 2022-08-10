@@ -30,8 +30,6 @@ public class Location extends AppCompatActivity implements LocationListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_location);
 
         locationBtn = (Button) findViewById(R.id.locationbtn);

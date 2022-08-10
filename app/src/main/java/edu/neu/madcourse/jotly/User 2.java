@@ -1,6 +1,7 @@
 package edu.neu.madcourse.jotly;
 
 public class User {
+
     public String userName, email, password, confirmPass, userFullName;
 
     public User() {
