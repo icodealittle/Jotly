@@ -82,7 +82,7 @@
         app:layout_constraintVertical_bias="0.111" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/locationCB"
         android:layout_width="161dp"
         android:layout_height="43dp"
         android:text="Add Location"
@@ -99,7 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="168dp"
         android:text="Content"
-        app:layout_constraintBottom_toTopOf="@+id/checkBox"
+        app:layout_constraintBottom_toTopOf="@+id/locationCB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,7 +113,7 @@
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/checkBox"
+        app:layout_constraintBottom_toTopOf="@+id/locationCB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"

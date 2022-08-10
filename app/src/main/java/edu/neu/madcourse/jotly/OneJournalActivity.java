@@ -54,16 +54,16 @@ protected void onCreate(Bundle savedInstanceState) {
         }
 
 public void addEntry() {
-        DialogFragment newFragment = new FABEntryDialog();
+        DialogFragment newFragment = new FABEntryDialog(this);
         newFragment.show(getSupportFragmentManager(), "Enter link");
         }
         // TODO This Dialog is used as an example, It can be replaced by a entry activity page
 @Override
-public void onDialogPositiveClick(DialogFragment dialog, String name, String content) {
+public void onDialogPositiveClick(DialogFragment dialog, String name, String content, String location) {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
         String date = timeStamp.substring(0,4) + "-" +timeStamp.substring(4,6) +"-" +timeStamp.substring(6,8);
         String time = timeStamp.substring(9,11) + ":" + timeStamp.substring(11,13);
-        Entry addOneEntry = new Entry(date, time, name, content);
+        Entry addOneEntry = new Entry(date, time, name, content, location);
         if (name.isEmpty() || name == null) {
         Snackbar.make(linkListRecyclerView,"Neither name or URL can be empty",Snackbar.LENGTH_SHORT).show();
         } else {

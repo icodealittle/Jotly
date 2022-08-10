@@ -30,10 +30,10 @@ public class Location extends AppCompatActivity implements LocationListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location);
+        //setContentView(R.layout.activity_location);
 
-        locationBtn = (Button) findViewById(R.id.locationbtn);
-        locationTV = (TextView) findViewById(R.id.locationTV);
+        //locationBtn = (Button) findViewById(R.id.locationbtn);
+        //locationTV = (TextView) findViewById(R.id.locationTV);
 
         if (ContextCompat.checkSelfPermission(Location.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(Location.this, new String[]{
