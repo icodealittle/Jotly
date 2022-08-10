@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
         <entry key="app/src/main/res/layout/activity_journal_dash.xml" value="0.2833333333333333" />
         <entry key="app/src/main/res/layout/activity_location.xml" value="0.2833333333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2833333333333333" />
@@ -12,6 +13,9 @@
         <entry key="app/src/main/res/layout/register.xml" value="0.375" />
         <entry key="app/src/main/res/layout/reset_password.xml" value="0.2677083333333333" />
         <entry key="app/src/main/res/layout/user_profile.xml" value="0.375" />
+=======
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2833333333333333" />
+>>>>>>> ff9c5bc (Firebase setup)
       </map>
     </option>
   </component>
