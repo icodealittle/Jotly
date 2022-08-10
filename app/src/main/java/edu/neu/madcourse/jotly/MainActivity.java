@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (user.isEmailVerified()) {
                     //Redirect to journal dashboard
-                    startActivity(new Intent(MainActivity.this, UserProfile.class));
+                    startActivity(new Intent(MainActivity.this, HomePageActivity.class));
                 } else {
                     user.sendEmailVerification();
                     Toast.makeText(MainActivity.this, "Please verify your email " +
