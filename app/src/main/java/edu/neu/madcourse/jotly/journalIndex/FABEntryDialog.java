@@ -12,6 +12,7 @@ import android.location.Geocoder;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -62,16 +63,19 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
                         content  = inputContent.getText().toString();
                         checkedLocation = "Location: NA";
                         Boolean hasLocation = locationCB.isChecked();
+
                         if (hasLocation) {
+                            Log.e("This is checked", "Show here");
                             if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_DENIED) {
                                 ActivityCompat.requestPermissions(context, new String[]{
                                         Manifest.permission.ACCESS_FINE_LOCATION
                                 }, 100);
-
+                                Log.e("This is permited", "Show here");
                             }
+                            getLocation();
 
                         }
-                        System.out.print("This is " + checkedLocation);
+                        Log.e("This is " + checkedLocation, "Show here");
                         listener.onDialogPositiveClick(FABEntryDialog.this, name, content, checkedLocation);
                     }
                 })

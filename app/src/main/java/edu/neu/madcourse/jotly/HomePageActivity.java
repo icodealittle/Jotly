@@ -41,7 +41,7 @@ public class HomePageActivity extends AppCompatActivity
             }
         });
 
-        // TODO Obtain all journals and display them in the app
+        // TODO Obtain all journals from database and set
         linkListRecyclerView = findViewById(R.id.recycleView);
         linkListRecyclerView.setHasFixedSize(true);
         linkListRecyclerView.setLayoutManager(new LinearLayoutManager(this));

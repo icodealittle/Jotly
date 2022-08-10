@@ -2,7 +2,11 @@ package edu.neu.madcourse.jotly.journalIndex;
 
 import android.media.Image;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class presents a journal object
@@ -50,6 +54,18 @@ public class Entry implements Serializable {
         this.content = content;
         this.mood = mood;
         this.updateTime = date + " " + time;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> entry = new HashMap<>();
+        entry.put("title", title);
+        entry.put("date", date);
+        entry.put("time", time);
+        entry.put("content", content);
+        entry.put("updated", updateTime);
+        entry.put("location", location);
+        return entry;
     }
 
     public void setLocation(String location){
