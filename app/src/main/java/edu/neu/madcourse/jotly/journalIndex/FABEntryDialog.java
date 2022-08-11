@@ -74,10 +74,9 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
                             }
                             getLocation();
 
+                        } else {
+                            listener.onDialogPositiveClick(FABEntryDialog.this, name, content, checkedLocation);
                         }
-                        // TODO CHECK WHY DATA DOES NOT CHANGE
-                        Log.e("This is " + checkedLocation, "Show here");
-                        listener.onDialogPositiveClick(FABEntryDialog.this, name, content, checkedLocation);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -101,6 +100,7 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
         }
     }
 
+    // send get location request
     @SuppressLint("MissingPermission")
     private void getLocation() {
         Log.e("This gets into gl", "Show here");
@@ -118,10 +118,6 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
 
     @Override
     public void onLocationChanged(@NonNull android.location.Location location) {
-
-        Toast.makeText(context,
-                "" + location.getLatitude() + "," + location.getLongitude(),
-                Toast.LENGTH_SHORT).show();
         Log.e("This gets into ol", "Show here");
         try {
             Log.e("This gets into ol try", "Show here");
@@ -131,7 +127,8 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
             Log.e("This is" + address, "Show here");
 
             checkedLocation = address;
-            Log.e("This is" + checkedLocation, "Show here");
+            listener.onDialogPositiveClick(FABEntryDialog.this, name, content, checkedLocation);
+            Log.e("This is " + checkedLocation, "Show here");
         } catch (Exception e) {
             Log.e("This gets into ol exp", "Show here");
             e.printStackTrace();

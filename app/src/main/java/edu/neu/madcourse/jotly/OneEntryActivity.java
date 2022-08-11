@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import edu.neu.madcourse.jotly.R;
 import edu.neu.madcourse.jotly.addingJournal.Journal;
 import edu.neu.madcourse.jotly.journalIndex.Entry;
@@ -24,8 +26,6 @@ public class OneEntryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.one_entry);
-        //String content = "Test journal content";
-        //Entry oneEntry = new Entry("2022-11-1", "12:23", "Test 1", content, "1233.22, 2123.22");
         currentEntry = (Entry) getIntent().getSerializableExtra("entry");
         titleEV = findViewById(R.id.titleTV);
         contentET = findViewById(R.id.contentTV);
@@ -55,6 +55,10 @@ public class OneEntryActivity extends AppCompatActivity {
                 currentEntry.changeTitle(title);
                 currentEntry.changeContent(content);
                 // TODO update the current entry
+                Snackbar.make(v,
+                        "Saved all the changes",
+                        Snackbar.LENGTH_SHORT).show();
+
             }
         });
     }
