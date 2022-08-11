@@ -75,6 +75,7 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
                             getLocation();
 
                         }
+                        // TODO CHECK WHY DATA DOES NOT CHANGE
                         Log.e("This is " + checkedLocation, "Show here");
                         listener.onDialogPositiveClick(FABEntryDialog.this, name, content, checkedLocation);
                     }
@@ -102,13 +103,16 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
 
     @SuppressLint("MissingPermission")
     private void getLocation() {
+        Log.e("This gets into gl", "Show here");
         try {
-            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5, FABEntryDialog.this);
+            locationManager = (LocationManager) context.getApplicationContext()
+                    .getSystemService(context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000,
+                    5, FABEntryDialog.this);
+            Log.e("This gets into gl try", "Show here");
         } catch (Exception exception) {
-
             exception.printStackTrace();
-
+            Log.e("This gets into gl exc", "Show here");
         }
     }
 
@@ -118,17 +122,20 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
         Toast.makeText(context,
                 "" + location.getLatitude() + "," + location.getLongitude(),
                 Toast.LENGTH_SHORT).show();
+        Log.e("This gets into ol", "Show here");
         try {
+            Log.e("This gets into ol try", "Show here");
             Geocoder geocoder = new Geocoder(context, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             String address = addresses.get(0).getAddressLine(0);
+            Log.e("This is" + address, "Show here");
 
             checkedLocation = address;
-
+            Log.e("This is" + checkedLocation, "Show here");
         } catch (Exception e) {
+            Log.e("This gets into ol exp", "Show here");
             e.printStackTrace();
         }
-
     }
 
     @Override

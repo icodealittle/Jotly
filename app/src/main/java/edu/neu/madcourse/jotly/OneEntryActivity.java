@@ -18,6 +18,7 @@ public class OneEntryActivity extends AppCompatActivity {
     EditText contentET, titleEV;
     Entry currentEntry;
     Button backBtn, saveBtn;
+    String title, content;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,18 @@ public class OneEntryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(OneEntryActivity.this,
                         OneJournalActivity.class));
+            }
+        });
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                title = titleEV.getText().toString();
+                content = contentET.getText().toString();
+
+                currentEntry.changeTitle(title);
+                currentEntry.changeContent(content);
+                // TODO update the current entry
             }
         });
     }
