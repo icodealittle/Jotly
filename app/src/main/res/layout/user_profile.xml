@@ -96,6 +96,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <Button
         android:id="@+id/signout"
         android:layout_width="wrap_content"
@@ -114,5 +115,16 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="85dp"
         android:src="@drawable/profile" />
+
+    <TextView
+        android:id="@+id/takePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="211dp"
+        android:text="Take Your Profile Photo"
+        android:textSize="10dp"
+        android:textStyle="italic" />
 
 </RelativeLayout>

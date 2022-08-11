@@ -1,11 +1,16 @@
 package edu.neu.madcourse.jotly;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -13,8 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -29,8 +32,13 @@ import com.google.firebase.storage.StorageReference;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserProfile extends AppCompatActivity {
-    public static final int CAM_PIC_CODE = 2;
     Uri imageURI;
+    private Button logout;
+    private FirebaseUser user;
+    private DatabaseReference databaseReference;
+    private String userID;
+    private TextView changePic;
+    private CircleImageView userProfPic;
     //    //Method in replace of deprecated for startactivityforresult
     ActivityResultLauncher<String> getContent = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
         @Override
@@ -41,15 +49,8 @@ public class UserProfile extends AppCompatActivity {
             }
         }
     });
-    ValueEventListener valueEventListener;
-    private Button logout;
-    private FirebaseUser user;
-    private DatabaseReference databaseReference;
-    private String userID;
-    private int TAKE_CAM_PIC = 1;
-    private TextView changePic;
-    private CircleImageView userProfPic;
-    private FirebaseStorage firebaseStorage;
+    ActivityResultLauncher<Intent> activityResultLauncher;
+    private TextView cam_take;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,77 +89,65 @@ public class UserProfile extends AppCompatActivity {
 
         userProfPic = findViewById(R.id.imageBtn);
         changePic = findViewById(R.id.changeProfilePic);
+        cam_take = findViewById(R.id.takePhoto);
 
         userProfPic.setOnClickListener(view -> getContent.launch("image/*"));
 
+        changePic.setOnClickListener(view -> uploadImage());
+
+        //Setting the profile pic for that specific user based on their registeration
+        // user ID via Realtime Database
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user.getPhotoUrl() != null) {
             Glide.with(UserProfile.this).load(user.getPhotoUrl()).into(userProfPic);
         }
 
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Bundle bundle = result.getData().getExtras();
+                    Bitmap bitmap = (Bitmap) bundle.get("data");
+                    userProfPic.setImageBitmap(bitmap);
+                }
+            }
+        });
 
+        cam_take.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    activityResultLauncher.launch(intent);
+                } else {
+                    Toast.makeText(UserProfile.this, "No app supporting this action", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void uploadImage() {
         if (imageURI != null) {
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Profile").child(userID + ".jpeg");
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference()
+                    .child("Profile").child(userID + ".jpeg");
 
             storageReference.putFile(imageURI).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     getImageURL(storageReference);
-                    Toast.makeText(UserProfile.this, "New Profile is set", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserProfile.this, "New Profile is set",
+                            Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(UserProfile.this, "Something Wrong. Please try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserProfile.this, "Something Wrong. " +
+                            "Please try again", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
-//    public void handleImageClick(View view) {
-//
-//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        if (intent.resolveActivity(getPackageManager()) != null){
-//            startActivityForResult(intent, TAKE_CAM_PIC);
-//        }
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == TAKE_CAM_PIC){
-//            switch (resultCode){
-//                case RESULT_OK:
-//                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-//                    userProfPic.setImageBitmap(bitmap);
-//                    uploadImage(bitmap);
-//            }
-//        }
-//    }
-
-//    private void uploadImage(Bitmap bitmap) {
-//
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-//
-//        String UserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Profile").child(userID + ".jpeg");
-//
-//        storageReference.putBytes(byteArrayOutputStream.toByteArray()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                getImageURL(storageReference);
-//            }
-//        });
-//    }
 
     private void getImageURL(StorageReference storageReference) {
-        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                setUserProfileUrl(uri);
-            }
-        });
+        storageReference.getDownloadUrl().addOnSuccessListener(uri -> setUserProfileUrl(uri));
     }
 
     private void setUserProfileUrl(Uri uri) {
@@ -169,18 +158,10 @@ public class UserProfile extends AppCompatActivity {
                 .build();
 
         user.updateProfile(request)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(UserProfile.this, "Updated succesfully", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(UserProfile.this, "Profile image failed...", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                .addOnSuccessListener(aVoid -> Toast.makeText(UserProfile.this,
+                        "Updated succesfully", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(UserProfile.this,
+                        "Profile image failed...", Toast.LENGTH_SHORT).show());
     }
 
 }
