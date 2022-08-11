@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.049" />
 
-    <TextView
+    <EditText
         android:id="@+id/titleTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.853" />
 
-    <TextView
+    <EditText
         android:id="@+id/contentTV"
         android:layout_width="303dp"
         android:layout_height="451dp"
@@ -136,4 +136,7 @@
         app:layout_constraintStart_toEndOf="@+id/backBtn"
         app:layout_constraintTop_toBottomOf="@+id/locationTV"
         app:layout_constraintVertical_bias="0.589" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
