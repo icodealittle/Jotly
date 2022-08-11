@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -66,8 +65,6 @@ public class Location extends AppCompatActivity implements LocationListener {
 
     @Override
     public void onLocationChanged(android.location.Location location) {
-        Toast.makeText(this, "" + location.getLatitude() + "," + location.getLongitude(),
-                Toast.LENGTH_SHORT).show();
         try {
             Geocoder geocoder = new Geocoder(Location.this, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(),
