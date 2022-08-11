@@ -37,7 +37,8 @@ protected void onCreate(Bundle savedInstanceState) {
         currentJournal = (Journal) getIntent().getSerializableExtra("journal");
         nameTV = findViewById(R.id.journalNmaeTV);
         nameTV.setText(currentJournal.getName());
-        //TODO Display all journals
+
+        entryList = currentJournal.getEntryList();
 
         addingJournalFAB = findViewById(R.id.fabEntry);
         addingJournalFAB.setOnClickListener(new View.OnClickListener() {
@@ -57,8 +58,7 @@ public void addEntry() {
         DialogFragment newFragment = new FABEntryDialog(this);
         newFragment.show(getSupportFragmentManager(), "Enter link");
         }
-        // TODO This Dialog is used as an example, It can be replaced by a entry activity page
-@Override
+
 public void onDialogPositiveClick(DialogFragment dialog, String name, String content, String location) {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
         String date = timeStamp.substring(0,4) + "-" +timeStamp.substring(4,6) +"-" +timeStamp.substring(6,8);
