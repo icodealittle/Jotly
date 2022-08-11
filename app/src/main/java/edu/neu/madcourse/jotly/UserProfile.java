@@ -36,15 +36,8 @@ public class UserProfile extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private String userID;
     //Method in replace of deprecated for startactivityforresult
-    ActivityResultLauncher<String> getContent = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
-        @Override
-        public void onActivityResult(Uri result) {
-            if (result != null) {
-                userProfPic.setImageURI(result);
-                imageURI = result;
-            }
-        }
-    });
+    ActivityResultLauncher<String> getContent;
+    ActivityResultLauncher activityResultLauncher;
     private TextView changePic;
     private CircleImageView userProfPic;
     private FirebaseStorage firebaseStorage;
@@ -83,6 +76,17 @@ public class UserProfile extends AppCompatActivity {
                         " Please try again!", Toast.LENGTH_LONG).show();
             }
         });
+
+        getContent = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
+            @Override
+            public void onActivityResult(Uri result) {
+                if (result != null) {
+                    userProfPic.setImageURI(result);
+                    imageURI = result;
+                }
+            }
+        });
+
 
         userProfPic = findViewById(R.id.imageBtn);
         changePic = findViewById(R.id.changeProfilePic);
