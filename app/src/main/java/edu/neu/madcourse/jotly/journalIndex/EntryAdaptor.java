@@ -22,9 +22,11 @@ public class EntryAdaptor extends RecyclerView.Adapter<EntryViewHolder> {
 
     private final List<Entry> entryList;
     private final Context context;
+    private Journal journal;
 
-    public EntryAdaptor(List<Entry> entryList, Context context) {
-        this.entryList = entryList;
+    public EntryAdaptor(Journal journal, Context context) {
+        this.journal = journal;
+        this.entryList = journal.getEntryList();
         this.context = context;
     }
 
@@ -44,7 +46,8 @@ public class EntryAdaptor extends RecyclerView.Adapter<EntryViewHolder> {
 
                 OneJournalActivity activity = (OneJournalActivity) context;
                 Intent i = new Intent(activity, OneEntryActivity.class);
-                i.putExtra("entry", entryList.get(position));
+                i.putExtra("journal", journal);
+                i.putExtra("posi", position);
                 activity.startActivity(i);
             }
         });

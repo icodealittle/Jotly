@@ -19,6 +19,8 @@ public class OneEntryActivity extends AppCompatActivity {
     TextView timeTV, locationTV;
     EditText contentET, titleEV;
     Entry currentEntry;
+    Journal currentJournal;
+    int currentPosi;
     Button backBtn, saveBtn;
     String title, content;
 
@@ -26,7 +28,9 @@ public class OneEntryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.one_entry);
-        currentEntry = (Entry) getIntent().getSerializableExtra("entry");
+        currentJournal = (Journal) getIntent().getSerializableExtra("journal");
+        currentPosi = (int) getIntent().getSerializableExtra("posi");
+        currentEntry = currentJournal.getEntryList().get(currentPosi);
         titleEV = findViewById(R.id.titleTV);
         contentET = findViewById(R.id.contentTV);
         timeTV = findViewById(R.id.timeTV);
@@ -41,8 +45,10 @@ public class OneEntryActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(OneEntryActivity.this,
-                        OneJournalActivity.class));
+                Intent i = new Intent(OneEntryActivity.this,
+                        OneJournalActivity.class);
+                i.putExtra("journal", currentJournal);
+                startActivity(i);
             }
         });
 
@@ -54,6 +60,8 @@ public class OneEntryActivity extends AppCompatActivity {
 
                 currentEntry.changeTitle(title);
                 currentEntry.changeContent(content);
+
+                currentJournal.getEntryList().set(currentPosi, currentEntry);
                 // TODO update the current entry
                 Snackbar.make(v,
                         "Saved all the changes",

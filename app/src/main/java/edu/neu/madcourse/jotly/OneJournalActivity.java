@@ -51,7 +51,7 @@ protected void onCreate(Bundle savedInstanceState) {
         linkListRecyclerView = findViewById(R.id.recyclerViewEntry);
         linkListRecyclerView.setHasFixedSize(true);
         linkListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        linkListRecyclerView.setAdapter(new EntryAdaptor(entryList, this));
+        linkListRecyclerView.setAdapter(new EntryAdaptor(currentJournal, this));
         }
 
 public void addEntry() {
