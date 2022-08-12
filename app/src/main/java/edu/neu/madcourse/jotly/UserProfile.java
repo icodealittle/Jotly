@@ -17,7 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-//import com.bumptech.glide.Glide;
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -100,7 +100,7 @@ public class UserProfile extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user.getPhotoUrl() != null) {
-            //Glide.with(UserProfile.this).load(user.getPhotoUrl()).into(userProfPic);
+            Glide.with(UserProfile.this).load(user.getPhotoUrl()).into(userProfPic);
         }
 
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {

@@ -105,6 +105,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         fAuth.createUserWithEmailAndPassword(userEmail, userPass).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 User user = new User(userName, userEmail, userPass, userPass1, userFullname);
+                // change FirebaseAuth.getInstance().getCurrentUser().getUid() to user.email
                 FirebaseDatabase.getInstance().getReference("User").child(FirebaseAuth
                                 .getInstance().getCurrentUser().getUid()).setValue(user)
                         .addOnCompleteListener(task1 -> {

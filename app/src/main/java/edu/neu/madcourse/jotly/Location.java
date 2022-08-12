@@ -71,7 +71,7 @@ public class Location extends AppCompatActivity implements LocationListener {
                     location.getLongitude(), 1);
             String address = addresses.get(0).getAddressLine(0);
 
-            locationTV.setText(address);
+            locationTV.setText("Location: " + address);
 
         } catch (Exception e) {
             e.printStackTrace();
