@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class OneJournalActivity extends AppCompatActivity implements FABEntryDia
         List<Entry> entryList = new ArrayList<>();
         Journal currentJournal;
         TextView nameTV;
+        private DatabaseReference firebase;
 
 @Override
 protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +41,7 @@ protected void onCreate(Bundle savedInstanceState) {
         nameTV = findViewById(R.id.journalNmaeTV);
         nameTV.setText(currentJournal.getName());
 
-        entryList = currentJournal.getEntryList();
-
-        addingJournalFAB = findViewById(R.id.fabEntry);
+    addingJournalFAB = findViewById(R.id.fabEntry);
         addingJournalFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,9 +66,9 @@ public void onDialogPositiveClick(DialogFragment dialog, String name, String con
         String time = timeStamp.substring(9,11) + ":" + timeStamp.substring(11,13);
         Entry addOneEntry = new Entry(date, time, name, content, location);
         if (name.isEmpty() || name == null) {
-        Snackbar.make(linkListRecyclerView,"Neither name or URL can be empty",Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(linkListRecyclerView,"Neither name or URL can be empty",Snackbar.LENGTH_SHORT).show();
         } else {
-            entryList.add(addOneEntry);
+            currentJournal.getEntryList().add(addOneEntry);
             linkListRecyclerView.getAdapter().notifyDataSetChanged();
             //TODO update database with new entry
             Snackbar.make(linkListRecyclerView,"A new journal created",Snackbar.LENGTH_SHORT).show();

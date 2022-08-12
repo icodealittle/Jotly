@@ -120,8 +120,6 @@ public class HomePageActivity extends AppCompatActivity
                     }
                 }
             });
-
-            //TODO write the new journal into database
         }
     }
 
