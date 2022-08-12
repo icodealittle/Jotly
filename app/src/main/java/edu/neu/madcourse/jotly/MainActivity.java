@@ -41,15 +41,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressBar = findViewById(R.id.progressBar2);
         firebaseAuth = FirebaseAuth.getInstance();
 
-        loca = findViewById(R.id.button);
-        loca.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent i = new Intent(MainActivity.this, Location.class);
-                startActivity(i);
-            }
-        });
+//        loca = findViewById(R.id.button);
+//        loca.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent i = new Intent(MainActivity.this, Location.class);
+//                startActivity(i);
+//            }
+//        });
     }
 
     public void onClick(View view) {
@@ -123,4 +123,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
     }
+
 }
