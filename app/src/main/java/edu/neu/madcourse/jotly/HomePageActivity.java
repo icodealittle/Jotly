@@ -26,7 +26,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -160,9 +159,22 @@ public class HomePageActivity extends AppCompatActivity
             Intent intent = new Intent(HomePageActivity.this, UserProfile.class);
             startActivity(intent);
             return true;
-        } else if (id == R.id.loginBtn) {
+        } else if (id == R.id.logouyBtn) {
+            userSignOut();
+            return true;
+        } else if (id == R.id.homepageBtn) {
+            Intent intent = new Intent(HomePageActivity.this, HomePageActivity.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void userSignOut() {
+        firebaseAuth.signOut();
+        Intent intent = new Intent(HomePageActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+        Toast.makeText(HomePageActivity.this, "Sign-out Successful", Toast.LENGTH_SHORT).show();
     }
 }
