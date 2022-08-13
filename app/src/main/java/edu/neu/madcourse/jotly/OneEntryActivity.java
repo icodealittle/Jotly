@@ -10,6 +10,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import edu.neu.madcourse.jotly.R;
 import edu.neu.madcourse.jotly.addingJournal.Journal;
@@ -20,9 +24,11 @@ public class OneEntryActivity extends AppCompatActivity {
     EditText contentET, titleEV;
     Entry currentEntry;
     Journal currentJournal;
-    String eKey;
+    String eKey, jKey;
     Button backBtn, saveBtn;
     String title, content;
+    private DatabaseReference firebase;
+    private FirebaseAuth firebaseAuth;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +36,19 @@ public class OneEntryActivity extends AppCompatActivity {
         setContentView(R.layout.one_entry);
         currentEntry = (Entry) getIntent().getSerializableExtra("entry");
         eKey = (String) getIntent().getSerializableExtra("eKey");
+        currentJournal = (Journal) getIntent().getSerializableExtra("journal");
+        jKey = (String) getIntent().getSerializableExtra("jKey");
         titleEV = findViewById(R.id.titleTV);
         contentET = findViewById(R.id.contentTV);
         timeTV = findViewById(R.id.timeTV);
         locationTV = findViewById(R.id.locationTV);
         backBtn = findViewById(R.id.backBtn);
         saveBtn = findViewById(R.id.saveBtn);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getInstance().getCurrentUser();
+        firebase = FirebaseDatabase.getInstance().getReference().child("User")
+                .child(user.getUid()).child("journals").child(jKey).child("EntryList").child(eKey);
 
         titleEV.setText(currentEntry.getTitle());
         contentET.setText(currentEntry.getContent());
@@ -47,6 +60,7 @@ public class OneEntryActivity extends AppCompatActivity {
                 Intent i = new Intent(OneEntryActivity.this,
                         OneJournalActivity.class);
                 i.putExtra("journal", currentJournal);
+                i.putExtra("jKey", jKey);
                 startActivity(i);
             }
         });
@@ -60,8 +74,8 @@ public class OneEntryActivity extends AppCompatActivity {
                 currentEntry.changeTitle(title);
                 currentEntry.changeContent(content);
 
-                //currentJournal.getEntryList().set(currentPosi, currentEntry);
-                // TODO update the current entry
+
+                firebase.setValue(currentEntry);
                 Snackbar.make(v,
                         "Saved all the changes",
                         Snackbar.LENGTH_SHORT).show();

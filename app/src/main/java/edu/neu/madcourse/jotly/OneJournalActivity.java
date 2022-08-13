@@ -108,7 +108,7 @@ protected void onCreate(Bundle savedInstanceState) {
     entryListRecyclerView = findViewById(R.id.recyclerViewEntry);
     entryListRecyclerView.setHasFixedSize(true);
     entryListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-    entryListRecyclerView.setAdapter(new EntryAdaptor(entryList, this));
+    entryListRecyclerView.setAdapter(new EntryAdaptor(entryList, jKey, currentJournal, this));
         }
 
 public void addEntry() {
@@ -150,7 +150,7 @@ public void onDialogPositiveClick(DialogFragment dialog, String name, String con
                     entryList.put(child.getKey(), child.getValue(Entry.class));
                 });
 
-                entryAdaptor = new EntryAdaptor(entryList, entryListRecyclerView.getContext());
+                entryAdaptor = new EntryAdaptor(entryList, jKey, currentJournal, entryListRecyclerView.getContext());
                 entryListRecyclerView.setAdapter(entryAdaptor);
             }
 

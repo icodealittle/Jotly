@@ -24,10 +24,14 @@ public class EntryAdaptor extends RecyclerView.Adapter<EntryViewHolder> {
 
     private Map<String, Entry> entryList = new TreeMap<>();
     private final Context context;
+    private String jKey;
+    private Journal currentJournal;
 
-    public EntryAdaptor(Map<String, Entry> entryList, Context context) {
+    public EntryAdaptor(Map<String, Entry> entryList, String jKey, Journal currentJournal, Context context) {
         this.entryList = entryList;
         this.context = context;
+        this.jKey = jKey;
+        this.currentJournal = currentJournal;
     }
 
     @NonNull
@@ -47,6 +51,8 @@ public class EntryAdaptor extends RecyclerView.Adapter<EntryViewHolder> {
                 Intent i = new Intent(activity, OneEntryActivity.class);
                 i.putExtra("entry", keyEntryPair.getValue());
                 i.putExtra("eKey", keyEntryPair.getKey());
+                i.putExtra("journal", currentJournal);
+                i.putExtra("jKey", jKey);
                 activity.startActivity(i);
             }
         });
