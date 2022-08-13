@@ -51,31 +51,14 @@
         android:layout_marginTop="329dp"
         android:text="" />
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/usernameTV_display"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginStart="128dp"-->
-    <!--        android:layout_marginTop="259dp"-->
-    <!--        android:text="" />-->
-
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/fullnameTV_display"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginStart="128dp"-->
-    <!--        android:layout_marginTop="356dp"-->
-    <!--        android:text=""-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <TextView
         android:id="@+id/userName_display"
-        android:layout_width="wrap_content"
+        android:layout_width="154dp"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="264dp"
+        android:layout_marginTop="250dp"
         android:text="Username"
         android:textSize="25dp"
         android:textStyle="bold" />
@@ -84,32 +67,18 @@
         android:id="@+id/changeProfilePic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="196dp"
+        android:layout_marginTop="220dp"
         android:text="Set as Profile Picture"
         android:textSize="10dp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textStyle="italic" />
 
-    <Button
-        android:id="@+id/signout"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp"
-        android:text="Logout"
-        android:textSize="10dp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageBtn"
-        android:layout_width="124dp"
-        android:layout_height="130dp"
+        android:layout_width="150dp"
+        android:layout_height="138dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="69dp"
@@ -121,7 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="211dp"
+        android:layout_marginTop="230dp"
         android:text="Take Your Profile Photo"
         android:textSize="10dp"
         android:textStyle="italic" />

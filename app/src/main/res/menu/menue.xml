@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/homepageBtn"
+        android:orderInCategory="100"
+        android:title="Homepage"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/userProfile"
         android:orderInCategory="100"
         android:title="Profile"

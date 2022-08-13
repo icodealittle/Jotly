@@ -5,12 +5,13 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -39,8 +40,9 @@ public class UserProfile extends AppCompatActivity {
     private String userID;
     private TextView changePic;
     private CircleImageView userProfPic;
-    //    //Method in replace of deprecated for startactivityforresult
-    ActivityResultLauncher<String> getContent = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
+    //Method in replace of deprecated for startactivityforresult
+    ActivityResultLauncher<String> getContent = registerForActivityResult(new
+            ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
         @Override
         public void onActivityResult(Uri result) {
             if (result != null) {
@@ -49,6 +51,7 @@ public class UserProfile extends AppCompatActivity {
             }
         }
     });
+    private FirebaseAuth firebaseAuth;
     ActivityResultLauncher<Intent> activityResultLauncher;
     private TextView cam_take;
 
@@ -87,6 +90,7 @@ public class UserProfile extends AppCompatActivity {
             }
         });
 
+        firebaseAuth = FirebaseAuth.getInstance();
         userProfPic = findViewById(R.id.imageBtn);
         changePic = findViewById(R.id.changeProfilePic);
         cam_take = findViewById(R.id.takePhoto);
@@ -103,14 +107,12 @@ public class UserProfile extends AppCompatActivity {
             Glide.with(UserProfile.this).load(user.getPhotoUrl()).into(userProfPic);
         }
 
-        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    Bundle bundle = result.getData().getExtras();
-                    Bitmap bitmap = (Bitmap) bundle.get("data");
-                    userProfPic.setImageBitmap(bitmap);
-                }
+        activityResultLauncher = registerForActivityResult(new
+                ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                Bundle bundle = result.getData().getExtras();
+                Bitmap bitmap = (Bitmap) bundle.get("data");
+                userProfPic.setImageBitmap(bitmap);
             }
         });
 
@@ -121,7 +123,8 @@ public class UserProfile extends AppCompatActivity {
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     activityResultLauncher.launch(intent);
                 } else {
-                    Toast.makeText(UserProfile.this, "No app supporting this action", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserProfile.this, "No app supporting this action",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -164,4 +167,36 @@ public class UserProfile extends AppCompatActivity {
                         "Profile image failed...", Toast.LENGTH_SHORT).show());
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menue, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.userProfile) {
+            Intent intent = new Intent(UserProfile.this, UserProfile.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.logouyBtn) {
+            userSignOut();
+            return true;
+        } else if (id == R.id.homepageBtn) {
+            Intent intent = new Intent(UserProfile.this, HomePageActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void userSignOut() {
+        firebaseAuth.signOut();
+        Intent intent = new Intent(UserProfile.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+        Toast.makeText(UserProfile.this, "Sign-out Successful", Toast.LENGTH_SHORT).show();
+    }
 }
