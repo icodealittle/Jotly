@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,6 +43,7 @@ public class HomePageActivity extends AppCompatActivity
     Map<String, Journal> journalList = new TreeMap<String, Journal>();
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebase;
+    TextView helloTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +51,30 @@ public class HomePageActivity extends AppCompatActivity
         setContentView(R.layout.homepage_activity);
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        helloTV = findViewById(R.id.helloTV);
+
+        firebase = FirebaseDatabase.getInstance().getReference().child("User").child(user.getUid());
+        firebase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User userProfile = snapshot.getValue(User.class);
+
+                if (userProfile != null) {
+                    helloTV.setText("Hello, " + userProfile.userName + "!");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+            helloTV = findViewById(R.id.helloTV);
+        helloTV.setText("Hello, " + user.getDisplayName());
 
         // make a journal if not exist
-        firebase = FirebaseDatabase.getInstance().getReference().child("User").child(user.getUid()).child("journals");
+        firebase = firebase.child("journals");
 
        // TODO read the journalList of the log-in user from database
         firebase.addChildEventListener(

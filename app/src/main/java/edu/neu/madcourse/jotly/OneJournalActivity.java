@@ -1,8 +1,10 @@
 package edu.neu.madcourse.jotly;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +52,7 @@ public class OneJournalActivity extends AppCompatActivity implements FABEntryDia
         TextView nameTV;
         private DatabaseReference firebase;
         private FirebaseAuth firebaseAuth;
+        Button backToHomeBtn;
 
 @Override
 protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +107,15 @@ protected void onCreate(Bundle savedInstanceState) {
                 addEntry();
                 }
         });
+
+    backToHomeBtn = findViewById(R.id.backToHomeBtn);
+    backToHomeBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent i = new Intent(OneJournalActivity.this, HomePageActivity.class);
+            startActivity(i);
+        }
+    });
 
     entryListRecyclerView = findViewById(R.id.recyclerViewEntry);
     entryListRecyclerView.setHasFixedSize(true);
