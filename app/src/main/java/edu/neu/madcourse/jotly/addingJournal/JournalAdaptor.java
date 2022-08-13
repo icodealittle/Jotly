@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Map;
 
 import edu.neu.madcourse.jotly.HomePageActivity;
 import edu.neu.madcourse.jotly.OneJournalActivity;
@@ -21,10 +22,10 @@ import edu.neu.madcourse.jotly.R;
  */
 public class JournalAdaptor extends RecyclerView.Adapter<JournalViewHolder> {
 
-    private final List<Journal> journalList;
+    private final Map<String, Journal> journalList;
     private final Context context;
 
-    public JournalAdaptor(List<Journal> linkJournal, Context context) {
+    public JournalAdaptor(Map<String, Journal> linkJournal, Context context) {
         this.journalList = linkJournal;
         this.context = context;
     }
@@ -37,14 +38,16 @@ public class JournalAdaptor extends RecyclerView.Adapter<JournalViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull JournalViewHolder holder, int position) {
-        holder.bindThisData(journalList.get(position));
+        Map.Entry<String, Journal> keyJourPair = (Map.Entry<String, Journal>)journalList.entrySet().toArray()[position];
+        holder.bindThisData(keyJourPair.getValue());
         holder.nameTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO: Click the name to open a journal in a new activity
                 HomePageActivity activity = (HomePageActivity) context;
                 Intent i = new Intent(activity, OneJournalActivity.class);
-                i.putExtra("journal", journalList.get(position));
+                i.putExtra("journal", keyJourPair.getValue());
+                i.putExtra("jKey", keyJourPair.getKey());
                 activity.startActivity(i);
             }
         });

@@ -26,8 +26,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 import edu.neu.madcourse.jotly.addingJournal.FABDialog;
 import edu.neu.madcourse.jotly.addingJournal.Journal;
@@ -38,7 +39,7 @@ public class HomePageActivity extends AppCompatActivity
     FloatingActionButton addingJournalFAB;
     RecyclerView journalListRecyclerView;
     JournalAdaptor journalAdaptor;
-    List<Journal> journalList = new ArrayList<>();
+    Map<String, Journal> journalList = new TreeMap<String, Journal>();
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebase;
 
@@ -111,15 +112,16 @@ public class HomePageActivity extends AppCompatActivity
         if (name.isEmpty() || name == null) {
             Snackbar.make(journalListRecyclerView,"Neither name or URL can be empty",Snackbar.LENGTH_SHORT).show();
         } else {
-            journalList.add(addOneJournal);
-            journalListRecyclerView.getAdapter().notifyDataSetChanged();
-            Task t1 = firebase.setValue(journalList).addOnCompleteListener(new OnCompleteListener<Void>() {
+            DatabaseReference firebaseForNewJ = firebase.push();
+            Task t1 = firebaseForNewJ.setValue(addOneJournal).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (!task.isSuccessful()) {
                         Toast.makeText(getApplicationContext(), ("Unable to save the journal."), Toast.LENGTH_SHORT).show();
                     } else {
                         Snackbar.make(journalListRecyclerView,"A new journal created",Snackbar.LENGTH_SHORT).show();
+                        journalList.put(firebaseForNewJ.getKey(), addOneJournal);
+                        journalListRecyclerView.getAdapter().notifyDataSetChanged();
                     }
                 }
             });
@@ -131,7 +133,7 @@ public class HomePageActivity extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 snapshot.getChildren().forEach(child->{
-                    journalList.add(child.getValue(Journal.class));
+                    journalList.put(child.getKey(), child.getValue(Journal.class));
                 });
 
                 journalAdaptor = new JournalAdaptor(journalList, journalListRecyclerView.getContext());
@@ -140,7 +142,6 @@ public class HomePageActivity extends AppCompatActivity
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }

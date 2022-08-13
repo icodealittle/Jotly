@@ -7,18 +7,6 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/mood"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Mood"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.553"
-        app:layout_constraintStart_toEndOf="@+id/entryTitkle"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.049" />
-
-    <TextView
         android:id="@+id/entryTitkle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,18 +30,6 @@
         app:layout_constraintTop_toBottomOf="@+id/entryTitkle"
         app:layout_constraintVertical_bias="0.007" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="62dp"
-        android:layout_height="66dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.644"
-        app:layout_constraintStart_toEndOf="@+id/titleTV"
-        app:layout_constraintTop_toBottomOf="@+id/mood"
-        app:layout_constraintVertical_bias="0.0"
-        tools:srcCompat="@tools:sample/avatars" />
-
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
@@ -73,10 +49,10 @@
         android:text="Location"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.117"
+        app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.853" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:layout_constraintVertical_bias="0.841" />
 
     <EditText
         android:id="@+id/contentTV"
@@ -98,11 +74,11 @@
         android:layout_height="wrap_content"
         android:text="Last Update"
         app:layout_constraintBottom_toTopOf="@+id/contentTV"
-        app:layout_constraintEnd_toStartOf="@+id/mood"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toEndOf="@+id/entryTitkle"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.273" />
+        app:layout_constraintVertical_bias="0.22" />
 
     <TextView
         android:id="@+id/timeTV"
@@ -110,11 +86,11 @@
         android:layout_height="wrap_content"
         android:text="time"
         app:layout_constraintBottom_toTopOf="@+id/contentTV"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.197"
         app:layout_constraintStart_toEndOf="@+id/titleTV"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:layout_constraintVertical_bias="0.148" />
+        app:layout_constraintVertical_bias="0.082" />
 
     <Button
         android:id="@+id/backBtn"

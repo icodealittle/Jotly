@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import edu.neu.madcourse.jotly.HomePageActivity;
 import edu.neu.madcourse.jotly.OneEntryActivity;
@@ -20,13 +22,11 @@ import edu.neu.madcourse.jotly.addingJournal.JournalViewHolder;
 
 public class EntryAdaptor extends RecyclerView.Adapter<EntryViewHolder> {
 
-    private final List<Entry> entryList;
+    private Map<String, Entry> entryList = new TreeMap<>();
     private final Context context;
-    private Journal journal;
 
-    public EntryAdaptor(Journal journal, Context context) {
-        this.journal = journal;
-        this.entryList = journal.getEntryList();
+    public EntryAdaptor(Map<String, Entry> entryList, Context context) {
+        this.entryList = entryList;
         this.context = context;
     }
 
@@ -38,16 +38,15 @@ public class EntryAdaptor extends RecyclerView.Adapter<EntryViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull EntryViewHolder holder, int position) {
-        holder.bindThisData(entryList.get(position));
+        Map.Entry<String, Entry> keyEntryPair = (Map.Entry<String, Entry>)entryList.entrySet().toArray()[position];
+        holder.bindThisData(keyEntryPair.getValue());
         holder.nameTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Use the journal name to find entrylist which used in new activity
-
                 OneJournalActivity activity = (OneJournalActivity) context;
                 Intent i = new Intent(activity, OneEntryActivity.class);
-                i.putExtra("journal", journal);
-                i.putExtra("posi", position);
+                i.putExtra("entry", keyEntryPair.getValue());
+                i.putExtra("eKey", keyEntryPair.getKey());
                 activity.startActivity(i);
             }
         });
