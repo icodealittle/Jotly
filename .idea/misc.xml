@@ -9,19 +9,20 @@
         <entry key="app/src/main/res/layout/activity_location.xml" value="0.2833333333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2833333333333333" />
         <entry key="app/src/main/res/layout/activity_reset_passwrod.xml" value="0.1816123188405797" />
-        <entry key="app/src/main/res/layout/add_entry_fab.xml" value="0.15520833333333334" />
+        <entry key="app/src/main/res/layout/add_entry_fab.xml" value="0.375" />
         <entry key="app/src/main/res/layout/add_journal_fab.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/entry_activity.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/homepage_activity.xml" value="0.2998382568359375" />
         <entry key="app/src/main/res/layout/item_entry.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_journal.xml" value="0.1" />
         <entry key="app/src/main/res/layout/location.xml" value="0.2833333333333333" />
-        <entry key="app/src/main/res/layout/login.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/one_entry.xml" value="0.3083816528320313" />
-        <entry key="app/src/main/res/layout/one_journal.xml" value="0.16958923339843746" />
+        <entry key="app/src/main/res/layout/login.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/one_entry.xml" value="0.14249877929687496" />
+        <entry key="app/src/main/res/layout/one_journal.xml" value="0.1" />
         <entry key="app/src/main/res/layout/register.xml" value="0.375" />
         <entry key="app/src/main/res/layout/reset_password.xml" value="0.2677083333333333" />
         <entry key="app/src/main/res/layout/user_profile.xml" value="0.375" />
+        <entry key="app/src/main/res/menu/menue.xml" value="0.2833333333333333" />
       </map>
     </option>
   </component>
