@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +32,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.UUID;
 
 import edu.neu.madcourse.jotly.addingJournal.Journal;
 import edu.neu.madcourse.jotly.addingJournal.JournalAdaptor;
@@ -120,10 +124,21 @@ public void onDialogPositiveClick(DialogFragment dialog, String name, String con
         if (name.isEmpty() || name == null) {
             Snackbar.make(entryListRecyclerView,"Neither name or URL can be empty",Snackbar.LENGTH_SHORT).show();
         } else {
-            entryList.put("idasdas", addOneEntry);
-            entryListRecyclerView.getAdapter().notifyDataSetChanged();
+            DatabaseReference firebaseForNewE = firebase.push();
+            Task t1 = firebaseForNewE.setValue(addOneEntry).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (!task.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(), ("Unable to save the journal."), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Snackbar.make(entryListRecyclerView,"A new journal created",Snackbar.LENGTH_SHORT).show();
+                        entryList.put(firebaseForNewE.getKey(), addOneEntry);
+                        entryListRecyclerView.getAdapter().notifyDataSetChanged();
+                    }
+                }
+            });
 
-            Snackbar.make(entryListRecyclerView,"A new journal created",Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(entryListRecyclerView,"A new entry created",Snackbar.LENGTH_SHORT).show();
         }
     }
 
