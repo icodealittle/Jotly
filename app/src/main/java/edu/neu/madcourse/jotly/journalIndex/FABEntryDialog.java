@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -36,6 +37,7 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
     String name, content, checkedLocation;
     private EditText inputName, inputContent;
     private CheckBox locationCB;
+    private Boolean hasLocation;
     View dialogView;
     private AppCompatActivity context;
 
@@ -48,8 +50,40 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
 
+        checkedLocation = "NA";
+        View view = inflater.inflate(R.layout.entry_activity, null);
 
-        builder.setView(inflater.inflate(R.layout.entry_activity, null))
+        registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted ->
+        {
+            if(isGranted)
+            {
+                getLocation();
+            }
+            else
+            {
+
+            }
+        });
+
+        locationCB =  view.findViewById(R.id.locationCB);
+        locationCB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hasLocation = locationCB.isChecked();
+                if (hasLocation) {
+                    Log.e("This is checked", "Show here");
+                    if (ContextCompat.checkSelfPermission(context,
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(context, new String[]{
+                                Manifest.permission.ACCESS_FINE_LOCATION
+                        }, 100);
+                        Log.e("This is permited", "Show here");
+                    }
+                }
+            }
+        });
+        builder.setView(view)
                 .setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
@@ -59,20 +93,7 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
                         locationCB = ((AlertDialog)dialog).findViewById(R.id.locationCB);
                         name = inputName.getText().toString();
                         content  = inputContent.getText().toString();
-                        checkedLocation = "NA";
-
-                        if (ContextCompat.checkSelfPermission(context,
-                                Manifest.permission.ACCESS_FINE_LOCATION)
-                                != PackageManager.PERMISSION_GRANTED) {
-                            ActivityCompat.requestPermissions(context, new String[]{
-                                    Manifest.permission.ACCESS_FINE_LOCATION
-                            }, 100);
-                            Log.e("This is permited", "Show here");
-                        }
-
-                        Boolean hasLocation = locationCB.isChecked();
                         if (hasLocation) {
-                            Log.e("This is checked", "Show here");
                             getLocation();
                         } else {
                             listener.onDialogPositiveClick(FABEntryDialog.this, name, content, checkedLocation);
