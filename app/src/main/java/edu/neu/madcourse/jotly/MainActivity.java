@@ -42,14 +42,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressBar = findViewById(R.id.progressBar2);
         firebaseAuth = FirebaseAuth.getInstance();
 
-        testbtn = findViewById(R.id.testBtn);
-        testbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, Location.class);
-                startActivity(i);
-            }
-        });
+//        testbtn = findViewById(R.id.testBtn);
+//        testbtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(MainActivity.this, Location.class);
+//                startActivity(i);
+//            }
+//        });
     }
 
     public void onClick(View view) {
