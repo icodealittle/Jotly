@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,8 +27,6 @@ import androidx.fragment.app.DialogFragment;
 import java.util.List;
 import java.util.Locale;
 
-import edu.neu.madcourse.jotly.Location;
-import edu.neu.madcourse.jotly.OneJournalActivity;
 import edu.neu.madcourse.jotly.R;
 
 public class FABEntryDialog extends DialogFragment implements LocationListener {
@@ -154,4 +151,5 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
     public void onProviderDisabled(@NonNull String provider) {
         LocationListener.super.onProviderDisabled(provider);
     }
+
 }
