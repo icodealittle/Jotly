@@ -27,6 +27,7 @@ import androidx.fragment.app.DialogFragment;
 import java.util.List;
 import java.util.Locale;
 
+import edu.neu.madcourse.jotly.Location;
 import edu.neu.madcourse.jotly.R;
 
 public class FABEntryDialog extends DialogFragment implements LocationListener {
@@ -58,19 +59,21 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
                         locationCB = ((AlertDialog)dialog).findViewById(R.id.locationCB);
                         name = inputName.getText().toString();
                         content  = inputContent.getText().toString();
-                        checkedLocation = "Location: NA";
-                        Boolean hasLocation = locationCB.isChecked();
+                        checkedLocation = "NA";
 
+                        if (ContextCompat.checkSelfPermission(context,
+                                Manifest.permission.ACCESS_FINE_LOCATION)
+                                != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(context, new String[]{
+                                    Manifest.permission.ACCESS_FINE_LOCATION
+                            }, 100);
+                            Log.e("This is permited", "Show here");
+                        }
+
+                        Boolean hasLocation = locationCB.isChecked();
                         if (hasLocation) {
                             Log.e("This is checked", "Show here");
-                            if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_DENIED) {
-                                ActivityCompat.requestPermissions(context, new String[]{
-                                        Manifest.permission.ACCESS_FINE_LOCATION
-                                }, 100);
-                                Log.e("This is permited", "Show here");
-                            }
                             getLocation();
-
                         } else {
                             listener.onDialogPositiveClick(FABEntryDialog.this, name, content, checkedLocation);
                         }
@@ -129,6 +132,7 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
         } catch (Exception e) {
             Log.e("This gets into ol exp", "Show here");
             e.printStackTrace();
+            //TODO when no permission for location  app crush
         }
     }
 

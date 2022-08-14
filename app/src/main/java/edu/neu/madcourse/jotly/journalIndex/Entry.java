@@ -43,7 +43,7 @@ public class Entry implements Serializable {
         this.time = time;
         this.title = title;
         this.content = content;
-        this.location = location;
+        this.location = "Location: "+location;
         this.updateTime = date + " " + time;
     }
 

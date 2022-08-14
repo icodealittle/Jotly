@@ -41,12 +41,14 @@ public class JournalAdaptor extends RecyclerView.Adapter<JournalViewHolder> {
     public void onBindViewHolder(@NonNull JournalViewHolder holder, int position) {
         Map.Entry<String, Journal> keyJourPair = (Map.Entry<String, Journal>)journalList.entrySet().toArray()[position];
         holder.bindThisData(keyJourPair.getValue());
+        holder.journalRL.setBackgroundResource(R.drawable.round_rec);
         if (position%2 == 0) {
-            holder.journalRL.setBackgroundColor(Color.parseColor("#656839"));
+            holder.journalRL.setBackgroundColor(Color.parseColor("#806C464F"));
         }
         else
         {
-            holder.journalRL.setBackgroundColor(Color.parseColor("#82846D"));
+            holder.journalRL.setBackgroundColor(Color.parseColor("#F9EBE0"));
+            holder.nameTV.setTextColor(Color.parseColor("#000000"));
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

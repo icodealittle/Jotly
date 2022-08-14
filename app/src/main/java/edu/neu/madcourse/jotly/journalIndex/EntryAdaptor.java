@@ -46,11 +46,12 @@ public class EntryAdaptor extends RecyclerView.Adapter<EntryViewHolder> {
         Map.Entry<String, Entry> keyEntryPair = (Map.Entry<String, Entry>)entryList.entrySet().toArray()[position];
         holder.bindThisData(keyEntryPair.getValue());
         if (position%2 == 0) {
-            holder.entryRL.setBackgroundColor(Color.parseColor("#80656839"));
+            holder.entryRL.setBackgroundColor(Color.parseColor("#806C464F"));
         }
         else
         {
-            holder.entryRL.setBackgroundColor(Color.parseColor("#8082846D"));
+            holder.entryRL.setBackgroundColor(Color.parseColor("#F9EBE0"));
+            holder.nameTV.setTextColor(Color.parseColor("#000000"));
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -15,11 +15,17 @@
 
         <TextView
             android:id="@+id/entryNameItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="399dp"
+            android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="4dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="7dp"
-            android:text="Name: "
+            android:layout_marginTop="4dp"
+            android:text="Entry"
+            android:textAlignment="center"
+            android:textColor="#ffffffff"
+            android:textSize="30dp"
             android:textStyle="bold" />
 
     </RelativeLayout>

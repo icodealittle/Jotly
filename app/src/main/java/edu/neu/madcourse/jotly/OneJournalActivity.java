@@ -1,6 +1,8 @@
 package edu.neu.madcourse.jotly;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -143,7 +147,7 @@ public void onDialogPositiveClick(DialogFragment dialog, String name, String con
                     if (!task.isSuccessful()) {
                         Toast.makeText(getApplicationContext(), ("Unable to save the journal."), Toast.LENGTH_SHORT).show();
                     } else {
-                        Snackbar.make(entryListRecyclerView,"A new journal created",Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(entryListRecyclerView,"A new entry created",Snackbar.LENGTH_SHORT).show();
                         entryList.put(firebaseForNewE.getKey(), addOneEntry);
                         entryListRecyclerView.getAdapter().notifyDataSetChanged();
                     }
