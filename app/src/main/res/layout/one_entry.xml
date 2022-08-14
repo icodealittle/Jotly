@@ -27,16 +27,16 @@
 
         <EditText
             android:id="@+id/titleTV"
-            android:layout_width="71dp"
-            android:layout_height="37dp"
+            android:layout_width="127dp"
+            android:layout_height="46dp"
             android:fontFamily="sans-serif-condensed"
             android:text=""
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.061"
+            app:layout_constraintHorizontal_bias="0.066"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/entryTitkle"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.001" />
 
         <TextView
             android:id="@+id/textView6"
@@ -79,7 +79,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/textView5"
@@ -91,10 +91,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/contentTV"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.507"
+            app:layout_constraintHorizontal_bias="0.596"
             app:layout_constraintStart_toEndOf="@+id/entryTitkle"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.297" />
+            app:layout_constraintVertical_bias="0.281" />
 
         <TextView
             android:id="@+id/timeTV"

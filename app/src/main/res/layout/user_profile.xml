@@ -5,93 +5,129 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F9EBE0"
     tools:context=".UserProfile">
 
-
-    <TextView
-        android:id="@+id/fullname_display"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="327dp"
-        android:text="Username:"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/email_display" />
+        android:layout_alignParentTop="true">
 
-    <TextView
-        android:id="@+id/email_display"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="297dp"
-        android:text="Email:"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/userName_display" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/emailTV_display"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="95dp"
-        android:layout_marginTop="296dp"
-        android:text="" />
+            <TextView
+                android:id="@+id/fullname_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="40dp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Fullname:"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/email_display" />
 
-    <TextView
-        android:id="@+id/fullnameTV_display"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="121dp"
-        android:layout_marginTop="329dp"
-        android:text="" />
+            <TextView
+                android:id="@+id/fullnameTV_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:fontFamily="sans-serif-condensed"
+                android:text=""
+                tools:layout_editor_absoluteX="125dp"
+                tools:layout_editor_absoluteY="315dp" />
 
+            <TextView
+                android:id="@+id/email_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="40dp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Email:"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/userName_display"
+                tools:layout_editor_absoluteX="40dp" />
 
-    <TextView
-        android:id="@+id/userName_display"
-        android:layout_width="154dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="250dp"
-        android:text="Username"
-        android:textSize="25dp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/emailTV_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="sans-serif-condensed"
+                android:text=""
+                tools:layout_editor_absoluteX="125dp"
+                tools:layout_editor_absoluteY="375dp" />
 
-    <TextView
-        android:id="@+id/changeProfilePic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="220dp"
-        android:text="Set as Profile Picture"
-        android:textSize="10dp"
-        android:textStyle="italic" />
+            <TextView
+                android:id="@+id/userName_display"
+                android:layout_width="154dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Username"
+                android:textAlignment="center"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.499"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="241dp" />
 
+            <TextView
+                android:id="@+id/changeProfilePic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Set as Profile Picture"
+                android:textSize="10dp"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.499"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="192dp" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imageBtn"
-        android:layout_width="150dp"
-        android:layout_height="138dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="69dp"
-        app:srcCompat="@drawable/profile" />
+            <TextView
+                android:id="@+id/takePhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Take Your Profile Photo"
+                android:textSize="10dp"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="213dp" />
 
-    <TextView
-        android:id="@+id/takePhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="230dp"
-        android:text="Take Your Profile Photo"
-        android:textSize="10dp"
-        android:textStyle="italic" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageBtn"
+                android:layout_width="160dp"
+                android:layout_height="149dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.499"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/profile"
+                tools:layout_editor_absoluteY="34dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 </RelativeLayout>
