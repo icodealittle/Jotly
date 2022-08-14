@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -107,6 +106,7 @@ public class UserProfile extends AppCompatActivity {
             Glide.with(UserProfile.this).load(user.getPhotoUrl()).into(userProfPic);
         }
 
+        //Camera
         activityResultLauncher = registerForActivityResult(new
                 ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {
@@ -116,16 +116,13 @@ public class UserProfile extends AppCompatActivity {
             }
         });
 
-        cam_take.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    activityResultLauncher.launch(intent);
-                } else {
-                    Toast.makeText(UserProfile.this, "No app supporting this action",
-                            Toast.LENGTH_SHORT).show();
-                }
+        cam_take.setOnClickListener(view -> {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                activityResultLauncher.launch(intent);
+            } else {
+                Toast.makeText(UserProfile.this, "No app supporting this action",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -169,7 +166,7 @@ public class UserProfile extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menue, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -197,6 +194,7 @@ public class UserProfile extends AppCompatActivity {
         Intent intent = new Intent(UserProfile.this, MainActivity.class);
         startActivity(intent);
         finish();
-        Toast.makeText(UserProfile.this, "Sign-out Successful", Toast.LENGTH_SHORT).show();
+        Toast.makeText(UserProfile.this, "Sign-out Successful",
+                Toast.LENGTH_SHORT).show();
     }
 }

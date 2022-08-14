@@ -93,7 +93,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             return;
         }
 
-        //Validity password have to be at least 6 charaters per firebase requirment
+        //Validity password have to be at least 6 charaters per firebase requirements
         if ((userPass.length() < 6) || (userPass1.length() < 6)) {
             password.setError("Minimum password have to be at least 6 characters or more. " +
                     "Please try again!");

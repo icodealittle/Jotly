@@ -42,15 +42,16 @@ public class ResetPassword extends AppCompatActivity {
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(reset_email).matches()) {
-            resetUserEmail.setError("Email have a be a valid email.");
+            resetUserEmail.setError("Valid Email only");
             resetUserEmail.requestFocus();
             return;
         }
         progressBar.setVisibility(View.VISIBLE);
         firebaseAuth.sendPasswordResetEmail(reset_email).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(ResetPassword.this, "Check your indox for " +
-                        "reset password instruction", Toast.LENGTH_LONG).show();
+                Toast.makeText(ResetPassword.this, "If your email is registered with " +
+                        "our database, please check your indox/junk mail for reset password " +
+                        "instruction", Toast.LENGTH_LONG).show();
                 progressBar.setVisibility(View.GONE);
             } else {
                 Toast.makeText(ResetPassword.this, "Invalid Email. " +

@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView createAcct;
     private TextView resetPass;
-    private Button userLogin, loca;
+    private Button userLogin;
     private EditText userEmail, userPassword;
     private FirebaseAuth firebaseAuth;
     private ProgressBar progressBar;
@@ -41,15 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressBar = findViewById(R.id.progressBar2);
         firebaseAuth = FirebaseAuth.getInstance();
 
-//        loca = findViewById(R.id.button);
-//        loca.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent i = new Intent(MainActivity.this, Location.class);
-//                startActivity(i);
-//            }
-//        });
     }
 
     public void onClick(View view) {
@@ -107,7 +98,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (user.isEmailVerified()) {
                     //Redirect to journal dashboard
-                    startActivity(new Intent(MainActivity.this, HomePageActivity.class));
+                    startActivity(new Intent(MainActivity.this,
+                            HomePageActivity.class));
                 } else {
                     user.sendEmailVerification();
                     Toast.makeText(MainActivity.this, "Please verify your email " +

@@ -132,16 +132,19 @@ public class HomePageActivity extends AppCompatActivity
     public void onDialogPositiveClick(DialogFragment dialog, String name) {
         Journal addOneJournal = new Journal(name);
         if (name.isEmpty() || name == null) {
-            Snackbar.make(journalListRecyclerView,"Neither name or URL can be empty",Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(journalListRecyclerView, "Neither name or URL can be empty",
+                    Snackbar.LENGTH_SHORT).show();
         } else {
             DatabaseReference firebaseForNewJ = firebase.push();
             Task t1 = firebaseForNewJ.setValue(addOneJournal).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (!task.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(), ("Unable to save the journal."), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), ("Unable to save the journal."),
+                                Toast.LENGTH_SHORT).show();
                     } else {
-                        Snackbar.make(journalListRecyclerView,"A new journal created",Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(journalListRecyclerView, "A new journal created",
+                                Snackbar.LENGTH_SHORT).show();
                         journalList.put(firebaseForNewJ.getKey(), addOneJournal);
                         journalListRecyclerView.getAdapter().notifyDataSetChanged();
                     }
@@ -154,11 +157,12 @@ public class HomePageActivity extends AppCompatActivity
         firebase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                snapshot.getChildren().forEach(child->{
+                snapshot.getChildren().forEach(child -> {
                     journalList.put(child.getKey(), child.getValue(Journal.class));
                 });
 
-                journalAdaptor = new JournalAdaptor(journalList, journalListRecyclerView.getContext());
+                journalAdaptor = new JournalAdaptor(journalList,
+                        journalListRecyclerView.getContext());
                 journalListRecyclerView.setAdapter(journalAdaptor);
             }
 
@@ -170,7 +174,7 @@ public class HomePageActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menue, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -193,11 +197,13 @@ public class HomePageActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    //Logout Function
     private void userSignOut() {
         firebaseAuth.signOut();
         Intent intent = new Intent(HomePageActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
-        Toast.makeText(HomePageActivity.this, "Sign-out Successful", Toast.LENGTH_SHORT).show();
+        Toast.makeText(HomePageActivity.this, "Sign-out Successful",
+                Toast.LENGTH_SHORT).show();
     }
 }
