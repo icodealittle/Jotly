@@ -2,6 +2,7 @@ package edu.neu.madcourse.jotly.journalIndex;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,14 @@ public class EntryAdaptor extends RecyclerView.Adapter<EntryViewHolder> {
     public void onBindViewHolder(@NonNull EntryViewHolder holder, int position) {
         Map.Entry<String, Entry> keyEntryPair = (Map.Entry<String, Entry>)entryList.entrySet().toArray()[position];
         holder.bindThisData(keyEntryPair.getValue());
-        holder.nameTV.setOnClickListener(new View.OnClickListener() {
+        if (position%2 == 0) {
+            holder.entryRL.setBackgroundColor(Color.parseColor("#80656839"));
+        }
+        else
+        {
+            holder.entryRL.setBackgroundColor(Color.parseColor("#8082846D"));
+        }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 OneJournalActivity activity = (OneJournalActivity) context;

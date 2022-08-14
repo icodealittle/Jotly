@@ -3,6 +3,7 @@ package edu.neu.madcourse.jotly.addingJournal;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,14 @@ public class JournalAdaptor extends RecyclerView.Adapter<JournalViewHolder> {
     public void onBindViewHolder(@NonNull JournalViewHolder holder, int position) {
         Map.Entry<String, Journal> keyJourPair = (Map.Entry<String, Journal>)journalList.entrySet().toArray()[position];
         holder.bindThisData(keyJourPair.getValue());
-        holder.nameTV.setOnClickListener(new View.OnClickListener() {
+        if (position%2 == 0) {
+            holder.journalRL.setBackgroundColor(Color.parseColor("#656839"));
+        }
+        else
+        {
+            holder.journalRL.setBackgroundColor(Color.parseColor("#82846D"));
+        }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO: Click the name to open a journal in a new activity
