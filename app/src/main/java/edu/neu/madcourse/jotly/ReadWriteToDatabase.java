@@ -52,6 +52,7 @@ public class ReadWriteToDatabase {
         String key = jotlyDatabaseReference.child("journal").push().getKey();
         Map<String, Object> journalValues = journal.toMap();
 
+
         Map<String, Object> journalsUpdates = new HashMap<>();
         journalsUpdates.put("/journal" + key, journalValues);
         journalsUpdates.put("/user" + userID + "/journals/" + key, journalValues);

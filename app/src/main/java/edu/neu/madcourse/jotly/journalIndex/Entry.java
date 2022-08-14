@@ -1,40 +1,59 @@
 package edu.neu.madcourse.jotly.journalIndex;
 
+import android.media.Image;
+
 import com.google.firebase.database.Exclude;
 
+import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import edu.neu.madcourse.jotly.addingJournal.Journal;
-
-
-public class Entry {
-    private String title; //TODO should ensure uniqueness if this is the identifier
+/**
+ * This class presents a journal object
+ */
+public class Entry implements Serializable {
     private String date;
     private String time;
+    private String title;
     private String content = null;
-    private String updated;
-    private Journal journal;
+    private String location = null;
+    private String weather = null;
+    private Image mood = null;
+    private String updateTime;
 
+    public Entry() {}
 
-    public Entry() {
-        //default
-    }
-
-    public Entry(String title, String date, String time) {
-        this.title = title;
+    public Entry(String date, String time, String title){
         this.date = date;
         this.time = time;
-        this.updated = date + " " + time;
+        this.title = title;
+        this.updateTime = date + " " + time;
     }
 
-    public Entry(String title, String date, String time, String content) {
-        this.title = title;
+    public Entry(String date, String time, String title, String content){
         this.date = date;
         this.time = time;
+        this.title = title;
         this.content = content;
-        this.updated = date + " " + time;
+        this.updateTime = date + " " + time;
+    }
+
+    public Entry(String date, String time, String title, String content, String location){
+        this.date = date;
+        this.time = time;
+        this.title = title;
+        this.content = content;
+        this.location = "Location: "+location;
+        this.updateTime = date + " " + time;
+    }
+
+    public Entry(String date, String time, String title, String content, Image mood){
+        this.date = date;
+        this.time = time;
+        this.title = title;
+        this.content = content;
+        this.mood = mood;
+        this.updateTime = date + " " + time;
     }
 
     @Exclude
@@ -44,29 +63,25 @@ public class Entry {
         entry.put("date", date);
         entry.put("time", time);
         entry.put("content", content);
-        entry.put("updated", updated);
-
+        entry.put("updated", updateTime);
+        entry.put("location", location);
         return entry;
     }
 
-    //create new blank entry - TODO needs listener
-    public void createEntry(String title, String date, String time) {
-        this.title = title;
-        this.date = date;
-        this.time = time;
+    public void setLocation(String location){
+        this.location = location;
     }
 
-    //update entry with content TODO needs listener
-    public void updateEntry(String title, String date, String time, String content) {
-        this.title = title;
-        this.date = date;
-        this.time = time;
-        this.content = content;
-        this.updated = date + " " + time;
+    public void setWeather(String weather){
+        this.weather = weather;
     }
 
-    public void changeTitle (String newTitle) {
-        this.title = newTitle;
+    public void setMood(Image mood){
+        this.mood = mood;
+    }
+
+    public void setUpdateTime(String updateTime){
+        this.updateTime = updateTime;
     }
 
     public String getDate() {
@@ -85,8 +100,23 @@ public class Entry {
         return this.content;
     }
 
-    public String getUpdated() {
-        return this.updated;
+    public String getLocation(){
+        return this.location;
     }
 
+    public String getWeather(String weather){
+        return this.weather;
+    }
+
+    public Image getMood(Image mood){
+        return this.mood;
+    }
+
+    public void changeContent(String newContent) {
+        this.content = newContent;
+    }
+
+    public void changeTitle(String newTitle) {
+        this.title = newTitle;
+    }
 }

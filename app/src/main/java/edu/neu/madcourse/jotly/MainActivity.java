@@ -1,9 +1,5 @@
 package edu.neu.madcourse.jotly;
 
-import androidx.annotation.NonNull;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -14,22 +10,25 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
     private TextView createAcct;
     private TextView resetPass;
     private Button userLogin;
     private EditText userEmail, userPassword;
     private FirebaseAuth firebaseAuth;
     private ProgressBar progressBar;
-    private ReadWriteToDatabase readWriteToDatabase;
-
+    private Button testbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.login);
 
         createAcct = findViewById(R.id.createAccount);
         createAcct.setOnClickListener(this);
@@ -43,7 +42,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressBar = findViewById(R.id.progressBar2);
         firebaseAuth = FirebaseAuth.getInstance();
 
-        readWriteToDatabase.initializeDatabaseReference();
+        testbtn = findViewById(R.id.testBtn);
+        testbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, Location.class);
+                startActivity(i);
+            }
+        });
     }
 
     public void onClick(View view) {
@@ -53,16 +59,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.loginBtn:
-                loginActivity();
+                loginActvity();
                 break;
-            /*case R.id.forgotPasword:
+            case R.id.forgotPasword:
                 Intent newPassword = new Intent(MainActivity.this, ResetPassword.class);
                 startActivity(newPassword);
-                break;*/
+                break;
         }
     }
 
-    private void loginActivity() {
+    private void loginActvity() {
 
         String uEmail = userEmail.getText().toString().trim();
         String uPassword = userPassword.getText().toString().trim();
@@ -96,15 +102,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressBar.setVisibility(View.VISIBLE);
         firebaseAuth.signInWithEmailAndPassword(uEmail, uPassword).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                //Redirect to journal dashboard
-                startActivity(new Intent(MainActivity.this, UserProfile.class));
+                // Verify User email in firebase
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                if (user.isEmailVerified()) {
+                    //Redirect to journal dashboard
+                    startActivity(new Intent(MainActivity.this,
+                            HomePageActivity.class));
+                } else {
+                    user.sendEmailVerification();
+                    Toast.makeText(MainActivity.this, "Please verify your email " +
+                            "before signing in", Toast.LENGTH_LONG).show();
+                    progressBar.setVisibility(View.GONE);
+                }
+
             } else {
                 Toast.makeText(MainActivity.this, "Failed to login",
                         Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
             }
         });
-    }
+
     }
 
-
+}

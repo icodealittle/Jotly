@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,10 +31,13 @@ public class Location extends AppCompatActivity implements LocationListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
-        locationBtn = (Button) findViewById(R.id.locationbtn);
-        locationTV = (TextView) findViewById(R.id.locationTV);
+        locationBtn = findViewById(R.id.locationbtn);
+        locationTV = findViewById(R.id.locationTV);
 
-        if (ContextCompat.checkSelfPermission(Location.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_DENIED) {
+        //Runtime permissions
+        if (ContextCompat.checkSelfPermission(Location.this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(Location.this, new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION
             }, 100);
@@ -52,25 +54,24 @@ public class Location extends AppCompatActivity implements LocationListener {
     @SuppressLint("MissingPermission")
     private void getLocation() {
         try {
-            locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5, Location.this);
+            locationManager = (LocationManager) getApplicationContext()
+                    .getSystemService(LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000,
+                    5, Location.this);
         } catch (Exception exception) {
-
             exception.printStackTrace();
-
         }
     }
 
     @Override
-    public void onLocationChanged(@NonNull android.location.Location location) {
-
-        Toast.makeText(this, "" + location.getLatitude() + "," + location.getLongitude(), Toast.LENGTH_SHORT).show();
+    public void onLocationChanged(android.location.Location location) {
         try {
             Geocoder geocoder = new Geocoder(Location.this, Locale.getDefault());
-            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(),
+                    location.getLongitude(), 1);
             String address = addresses.get(0).getAddressLine(0);
 
-            locationTV.setText(address);
+            locationTV.setText("Location: " + address);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,23 +79,16 @@ public class Location extends AppCompatActivity implements LocationListener {
 
     }
 
-    @Override
-    public void onLocationChanged(@NonNull List<android.location.Location> locations) {
-        LocationListener.super.onLocationChanged(locations);
-    }
 
     @Override
     public void onFlushComplete(int requestCode) {
-        LocationListener.super.onFlushComplete(requestCode);
     }
 
     @Override
     public void onProviderEnabled(@NonNull String provider) {
-        LocationListener.super.onProviderEnabled(provider);
     }
 
     @Override
     public void onProviderDisabled(@NonNull String provider) {
-        LocationListener.super.onProviderDisabled(provider);
     }
 }

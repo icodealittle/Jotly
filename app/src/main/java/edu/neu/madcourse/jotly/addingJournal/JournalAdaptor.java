@@ -1,7 +1,10 @@
 package edu.neu.madcourse.jotly.addingJournal;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +13,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Map;
 
-import edu.neu.madcourse.jotly.MainActivity;
+import edu.neu.madcourse.jotly.HomePageActivity;
 import edu.neu.madcourse.jotly.OneJournalActivity;
 import edu.neu.madcourse.jotly.R;
 
+/**
+ * This class is used to set each journal instance into the recycle view
+ */
+public class JournalAdaptor extends RecyclerView.Adapter<JournalViewHolder> {
 
-public class JournalAdaptor extends RecyclerView.Adapter<JournalViewHolder>  {
-    private final List<Journal> journalList;
+    private final Map<String, Journal> journalList;
     private final Context context;
 
-    public JournalAdaptor(List<Journal> linkJournal, Context context) {
+    public JournalAdaptor(Map<String, Journal> linkJournal, Context context) {
         this.journalList = linkJournal;
         this.context = context;
     }
@@ -33,13 +40,25 @@ public class JournalAdaptor extends RecyclerView.Adapter<JournalViewHolder>  {
 
     @Override
     public void onBindViewHolder(@NonNull JournalViewHolder holder, int position) {
-        holder.bindThisData(journalList.get(position));
-        holder.nameTV.setOnClickListener(new View.OnClickListener() {
+        Map.Entry<String, Journal> keyJourPair = (Map.Entry<String, Journal>)journalList.entrySet().toArray()[position];
+        holder.bindThisData(keyJourPair.getValue());
+        holder.journalRL.setBackgroundResource(R.drawable.round_rec);
+        if (position%2 == 0) {
+            ((GradientDrawable)holder.journalRL.getBackground()).setColor(0x906C464F);
+        }
+        else
+        {
+            ((GradientDrawable)holder.journalRL.getBackground()).setColor(0xffF9EBE0);
+            holder.nameTV.setTextColor(Color.parseColor("#000000"));
+        }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO: Click the name to open a journal in a new activity
-                MainActivity activity = (MainActivity) context;
+                HomePageActivity activity = (HomePageActivity) context;
                 Intent i = new Intent(activity, OneJournalActivity.class);
+                i.putExtra("journal", keyJourPair.getValue());
+                i.putExtra("jKey", keyJourPair.getKey());
                 activity.startActivity(i);
             }
         });

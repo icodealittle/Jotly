@@ -2,6 +2,7 @@ package edu.neu.madcourse.jotly.addingJournal;
 
 import com.google.firebase.database.Exclude;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.Map;
 
 import edu.neu.madcourse.jotly.journalIndex.Entry;
 
-public class Journal {
+public class Journal implements Serializable {
     private String name;
     private List<Entry> entryList = new ArrayList<>();
 
