@@ -1,32 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/link_adding_fab"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content">-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/promptTV"-->
+    <!--            android:layout_width="335dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:background="#0B3C49"-->
+    <!--            android:contentDescription="@string/app_name"-->
+    <!--            android:onClick="showDialog"-->
+    <!--            android:scaleType="center"-->
+    <!--            android:text="Please Enter The Journal Name"-->
+    <!--            android:textColor="#FFFFFFFF"-->
+    <!--            android:textSize="20dp"-->
+    <!--            android:textStyle="normal"-->
+    <!--            tools:layout_editor_absoluteX="7dp"-->
+    <!--            tools:layout_editor_absoluteY="3dp" />-->
+
+    <!--        <EditText-->
+    <!--            android:id="@+id/entryName"-->
+    <!--            android:layout_width="333dp"-->
+    <!--            android:layout_height="38dp"-->
+    <!--            android:hint="Journal name"-->
+    <!--            android:inputType="text"-->
+    <!--            android:minHeight="48dp"-->
+    <!--            android:textColorHint="#757575"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintHorizontal_bias="0.092"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            tools:layout_editor_absoluteY="38dp"-->
+    <!--            />-->
+    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
     <TextView
-        android:layout_width="327dp"
+        android:id="@+id/promptTV"
+        android:layout_width="335dp"
         android:layout_height="wrap_content"
-        android:background="#00008B"
+        android:background="#0B3C49"
         android:contentDescription="@string/app_name"
         android:onClick="showDialog"
         android:scaleType="center"
+        android:fontFamily="sans-serif-condensed"
         android:text="Please Enter The Journal Name"
         android:textColor="#FFFFFFFF"
-        android:textSize="30dp" />
+        android:textSize="20dp"
+        android:textStyle="normal"
+        tools:layout_editor_absoluteX="7dp"
+        tools:layout_editor_absoluteY="3dp" />
 
     <EditText
         android:id="@+id/entryName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_width="333dp"
+        android:layout_height="38dp"
         android:hint="Journal name"
         android:inputType="text"
+        android:fontFamily="sans-serif-condensed"
         android:minHeight="48dp"
-        android:textColorHint="#757575" />
-
+        android:textColorHint="#757575"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.092"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="38dp" />
 </LinearLayout>
