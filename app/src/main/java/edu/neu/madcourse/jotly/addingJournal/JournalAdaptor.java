@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,11 +44,11 @@ public class JournalAdaptor extends RecyclerView.Adapter<JournalViewHolder> {
         holder.bindThisData(keyJourPair.getValue());
         holder.journalRL.setBackgroundResource(R.drawable.round_rec);
         if (position%2 == 0) {
-            holder.journalRL.setBackgroundColor(Color.parseColor("#806C464F"));
+            ((GradientDrawable)holder.journalRL.getBackground()).setColor(0x906C464F);
         }
         else
         {
-            holder.journalRL.setBackgroundColor(Color.parseColor("#F9EBE0"));
+            ((GradientDrawable)holder.journalRL.getBackground()).setColor(0xffF9EBE0);
             holder.nameTV.setTextColor(Color.parseColor("#000000"));
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {

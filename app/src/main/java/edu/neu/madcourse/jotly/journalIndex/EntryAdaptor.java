@@ -3,6 +3,7 @@ package edu.neu.madcourse.jotly.journalIndex;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,12 +46,13 @@ public class EntryAdaptor extends RecyclerView.Adapter<EntryViewHolder> {
     public void onBindViewHolder(@NonNull EntryViewHolder holder, int position) {
         Map.Entry<String, Entry> keyEntryPair = (Map.Entry<String, Entry>)entryList.entrySet().toArray()[position];
         holder.bindThisData(keyEntryPair.getValue());
+        holder.entryRL.setBackgroundResource(R.drawable.round_rec);
         if (position%2 == 0) {
-            holder.entryRL.setBackgroundColor(Color.parseColor("#806C464F"));
+            ((GradientDrawable)holder.entryRL.getBackground()).setColor(0x906C464F);
         }
         else
         {
-            holder.entryRL.setBackgroundColor(Color.parseColor("#F9EBE0"));
+            ((GradientDrawable)holder.entryRL.getBackground()).setColor(0xffF9EBE0);
             holder.nameTV.setTextColor(Color.parseColor("#000000"));
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
