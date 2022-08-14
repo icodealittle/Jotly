@@ -1,6 +1,7 @@
 package edu.neu.madcourse.jotly.addingJournal;
 
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,10 +14,12 @@ import edu.neu.madcourse.jotly.R;
  */
 public class JournalViewHolder extends RecyclerView.ViewHolder {
     public TextView nameTV;
+    public RelativeLayout journalRL;
 
     public JournalViewHolder(@NonNull View itemView) {
         super(itemView);
-        this.nameTV = itemView.findViewById(R.id.entryNameItem);
+        this.nameTV = itemView.findViewById(R.id.journalNameItem);
+        this.journalRL = itemView.findViewById(R.id.item_link);
     }
 
     public void bindThisData(Journal theJournalToBind) {
