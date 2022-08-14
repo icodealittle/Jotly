@@ -44,16 +44,14 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
             android:fontFamily="sans-serif-condensed"
             android:text="Entry Title"
-            android:textSize="15dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/inputName"
-            app:layout_constraintEnd_toStartOf="@+id/textView2"
-            app:layout_constraintHorizontal_bias="0.111"
+            android:textSize="15dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <RadioButton
             android:id="@+id/radioButton"
