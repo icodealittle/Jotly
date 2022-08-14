@@ -17,10 +17,10 @@
             android:layout_height="527dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintHorizontal_bias="0.51"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.612" />
+            app:layout_constraintVertical_bias="0.573" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabEntry"
@@ -29,10 +29,10 @@
             android:clickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.861"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/journalNmaeTV"
-            app:layout_constraintVertical_bias="0.971"
+            app:layout_constraintVertical_bias="0.97"
             app:srcCompat="@android:drawable/ic_input_add" />
 
         <TextView
@@ -57,12 +57,12 @@
             android:backgroundTint="#004D40"
             android:fontFamily="sans-serif-condensed"
             android:text="BACK"
-            app:layout_constraintBottom_toTopOf="@+id/journalNmaeTV"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/journalNmaeTV"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.533"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.754" />
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewEntry"
+            app:layout_constraintVertical_bias="0.363" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

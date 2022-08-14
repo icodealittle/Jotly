@@ -136,10 +136,11 @@ public void onDialogPositiveClick(DialogFragment dialog, String name, String con
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
         String date = timeStamp.substring(0,4) + "-" +timeStamp.substring(4,6) +"-" +timeStamp.substring(6,8);
         String time = timeStamp.substring(9,11) + ":" + timeStamp.substring(11,13);
-        Entry addOneEntry = new Entry(date, time, name, content, location);
-        if (name.isEmpty() || name == null) {
-            Snackbar.make(entryListRecyclerView,"Neither name or URL can be empty",Snackbar.LENGTH_SHORT).show();
+        if (name == null ||name.isEmpty()) {
+            Snackbar.make(entryListRecyclerView,"Please do not leave the name empty",
+                    Snackbar.LENGTH_SHORT).show();
         } else {
+            Entry addOneEntry = new Entry(date, time, name, content, location);
             DatabaseReference firebaseForNewE = firebase.push();
             Task t1 = firebaseForNewE.setValue(addOneEntry).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override

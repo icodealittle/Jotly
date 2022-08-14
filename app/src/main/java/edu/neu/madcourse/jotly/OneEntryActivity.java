@@ -73,12 +73,15 @@ public class OneEntryActivity extends AppCompatActivity {
 
                 currentEntry.changeTitle(title);
                 currentEntry.changeContent(content);
-
-
-                firebase.setValue(currentEntry);
-                Snackbar.make(v,
-                        "Saved all the changes",
-                        Snackbar.LENGTH_SHORT).show();
+                if (title.isEmpty() || title == null) {
+                    Snackbar.make(v, "The Entry name cannot be empty",
+                            Snackbar.LENGTH_SHORT).show();
+                } else {
+                    firebase.setValue(currentEntry);
+                    Snackbar.make(v,
+                            "Saved all the changes",
+                            Snackbar.LENGTH_SHORT).show();
+                }
 
             }
         });

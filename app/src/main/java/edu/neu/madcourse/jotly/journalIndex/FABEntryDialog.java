@@ -25,6 +25,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -37,7 +39,7 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
     String name, content, checkedLocation;
     private EditText inputName, inputContent;
     private CheckBox locationCB;
-    private Boolean hasLocation;
+    private Boolean hasLocation = false;
     View dialogView;
     private AppCompatActivity context;
 
@@ -92,12 +94,12 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
                         inputContent = ((AlertDialog)dialog).findViewById(R.id.inputContent);
                         locationCB = ((AlertDialog)dialog).findViewById(R.id.locationCB);
                         name = inputName.getText().toString();
-                        content  = inputContent.getText().toString();
-                        if (hasLocation) {
-                            getLocation();
-                        } else {
-                            listener.onDialogPositiveClick(FABEntryDialog.this, name, content, checkedLocation);
-                        }
+                            content = inputContent.getText().toString();
+                            if (hasLocation) {
+                                getLocation();
+                            } else {
+                                listener.onDialogPositiveClick(FABEntryDialog.this, name, content, checkedLocation);
+                            }
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

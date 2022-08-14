@@ -131,8 +131,8 @@ public class HomePageActivity extends AppCompatActivity
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, String name) {
         Journal addOneJournal = new Journal(name);
-        if (name.isEmpty() || name == null) {
-            Snackbar.make(journalListRecyclerView, "Neither name or URL can be empty",
+        if (name == null ||name.isEmpty()) {
+            Snackbar.make(journalListRecyclerView, "Please do not leave the name empty",
                     Snackbar.LENGTH_SHORT).show();
         } else {
             DatabaseReference firebaseForNewJ = firebase.push();
