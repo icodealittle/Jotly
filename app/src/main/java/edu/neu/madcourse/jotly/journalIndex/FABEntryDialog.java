@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.List;
 import java.util.Locale;
 
+import edu.neu.madcourse.jotly.HomePageActivity;
 import edu.neu.madcourse.jotly.Location;
 import edu.neu.madcourse.jotly.R;
 
@@ -61,14 +63,14 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
             public void onClick(View v) {
                 hasLocation = locationCB.isChecked();
                 if (hasLocation) {
-                    Log.e("This is checked", "Show here");
+                    //Log.e("This is checked", "Show here");
                     if (ContextCompat.checkSelfPermission(context,
                             Manifest.permission.ACCESS_FINE_LOCATION)
                             != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(context, new String[]{
                                 Manifest.permission.ACCESS_FINE_LOCATION
                         }, 100);
-                        Log.e("This is permited", "Show here");
+//                        Log.e("This is permited", "Show here");
                     }
                 }
             }
@@ -114,35 +116,39 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
     // send get location request
     @SuppressLint("MissingPermission")
     private void getLocation() {
-        Log.e("This gets into gl", "Show here");
+        //Log.e("This gets into gl", "Show here");
         try {
             locationManager = (LocationManager) context.getApplicationContext()
                     .getSystemService(context.LOCATION_SERVICE);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000,
                     5, FABEntryDialog.this);
-            Log.e("This gets into gl try", "Show here");
+            //Log.e("This gets into gl try", "Show here");
         } catch (Exception exception) {
             exception.printStackTrace();
-            Log.e("This gets into gl exc", "Show here");
+            //Log.e("This gets into gl exc", "Show here");
+            Toast.makeText(context, "Unable to create the journal with location without permission",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onLocationChanged(@NonNull android.location.Location location) {
-        Log.e("This gets into ol", "Show here");
+//        Log.e("This gets into ol", "Show here");
         try {
-            Log.e("This gets into ol try", "Show here");
+//            Log.e("This gets into ol try", "Show here");
             Geocoder geocoder = new Geocoder(context, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             String address = addresses.get(0).getAddressLine(0);
-            Log.e("This is" + address, "Show here");
+//            Log.e("This is" + address, "Show here");
 
             checkedLocation = address;
             listener.onDialogPositiveClick(FABEntryDialog.this, name, content, checkedLocation);
-            Log.e("This is " + checkedLocation, "Show here");
+//            Log.e("This is " + checkedLocation, "Show here");
         } catch (Exception e) {
             Log.e("This gets into ol exp", "Show here");
             e.printStackTrace();
+            Toast.makeText(context, "Unable to create entry with location without permission",
+                    Toast.LENGTH_SHORT).show();
             //TODO when no permission for location  app crush
         }
     }
