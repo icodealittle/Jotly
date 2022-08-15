@@ -55,18 +55,6 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
         checkedLocation = "NA";
         View view = inflater.inflate(R.layout.entry_activity, null);
 
-        registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted ->
-        {
-            if(isGranted)
-            {
-                getLocation();
-            }
-            else
-            {
-
-            }
-        });
-
         locationCB =  view.findViewById(R.id.locationCB);
         locationCB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,6 +165,11 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
     @Override
     public void onProviderDisabled(@NonNull String provider) {
         LocationListener.super.onProviderDisabled(provider);
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
     }
 
 }
