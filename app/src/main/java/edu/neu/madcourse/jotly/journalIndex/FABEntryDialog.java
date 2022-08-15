@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.List;
 import java.util.Locale;
 
+import edu.neu.madcourse.jotly.HomePageActivity;
 import edu.neu.madcourse.jotly.Location;
 import edu.neu.madcourse.jotly.R;
 
@@ -141,9 +143,9 @@ public class FABEntryDialog extends DialogFragment implements LocationListener {
             listener.onDialogPositiveClick(FABEntryDialog.this, name, content, checkedLocation);
             Log.e("This is " + checkedLocation, "Show here");
         } catch (Exception e) {
-            Log.e("This gets into ol exp", "Show here");
-            e.printStackTrace();
-            //TODO when no permission for location  app crush
+            listener.onDialogPositiveClick(FABEntryDialog.this, name, content, checkedLocation);
+            Toast.makeText(context, "Cannot get your location without permission",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
