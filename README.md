@@ -1,4 +1,4 @@
-# Jotly
+# About Jotly
 
 ## Introduction: About The Project
 
