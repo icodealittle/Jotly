@@ -22,26 +22,43 @@ Jotly is here to help you care for your mental health and emotions! A good self-
 
 - User login
 
+<img width="347" alt="Screenshot 2022-11-29 at 3 06 23 PM" src="https://user-images.githubusercontent.com/55925207/204638577-b82f6cea-12b3-42bf-961d-8f2f84e88007.png">
+
+
 - User Registration
+
+<img width="347" alt="Screenshot 2022-11-29 at 3 06 30 PM" src="https://user-images.githubusercontent.com/55925207/204638610-08994424-20f9-401e-83ab-6d5e22bbf011.png">
+
 
 - Forget password
 
+<img width="347" alt="Screenshot 2022-11-29 at 3 06 37 PM" src="https://user-images.githubusercontent.com/55925207/204638678-48f81bea-a307-4f07-b307-129d4d3a3b97.png">
+
+
 - User logoff 
 
+<img width="347" alt="Screenshot 2022-11-29 at 3 12 57 PM" src="https://user-images.githubusercontent.com/55925207/204638708-2d0b3c11-7c4e-48c6-910d-6b54b0910217.png">
 
 ### Sensors
 
 - Camera
 
+<img width="334" alt="Screenshot 2022-11-29 at 3 12 36 PM" src="https://user-images.githubusercontent.com/55925207/204638909-c2e7f5b3-fea1-4070-8b7d-24f3356150b1.png">
+
 - Location
+
+<img width="347" alt="Screenshot 2022-11-29 at 3 13 57 PM" src="https://user-images.githubusercontent.com/55925207/204638932-88161f53-d34f-42d9-9acb-a902443bd137.png">
+
 
 ### Journal Page
 
 - Creat new journal threat
 
-- Edit existing journal
+<img width="347" alt="Screenshot 2022-11-29 at 3 13 09 PM" src="https://user-images.githubusercontent.com/55925207/204639057-fb3b63c2-4d77-44d9-8037-4cc65409c0db.png">
 
 - New journal entry
+
+<img width="347" alt="Screenshot 2022-11-29 at 3 13 31 PM" src="https://user-images.githubusercontent.com/55925207/204639131-73db3338-5281-4693-8a79-4625cb9c29a4.png">
 
 ## Frontend
 
