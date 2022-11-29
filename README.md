@@ -23,7 +23,8 @@ Jotly is here to help you care for your mental health and emotions! A good self-
 - User login
 
 - User Registration
-    ![Screenshot_20220814_180417](https://user-images.githubusercontent.com/55925207/204632513-e568a1e2-c601-48b2-b5c5-04e6081ed110.png) width="200" height="400"
+    
+    <img src="https://drive.google.com/file/d/10m9qxwOjbZxO0X1ulxrOonfTh4c9NcFr/view?usp=share_link" width="100" height="250">
 
 - Forget password
 
