@@ -23,8 +23,6 @@ Jotly is here to help you care for your mental health and emotions! A good self-
 - User login
 
 - User Registration
-    
-    <img src="https://drive.google.com/file/d/10m9qxwOjbZxO0X1ulxrOonfTh4c9NcFr/view?usp=share_link" width="100" height="250">
 
 - Forget password
 
@@ -47,6 +45,13 @@ Jotly is here to help you care for your mental health and emotions! A good self-
 
 ## Frontend
 
+<img width="202" alt="Screenshot 2022-11-29 at 3 00 10 PM" src="https://user-images.githubusercontent.com/55925207/204635727-e2690e74-ac21-408c-9443-35236e4fa94e.png">
+
 ## Backend
+
+### Data Model
+
+<img width="818" alt="Screenshot 2022-11-29 at 2 56 50 PM" src="https://user-images.githubusercontent.com/55925207/204635042-a513ece6-e2d4-487c-b28b-2970e986807f.png">
+
 
 ## API
